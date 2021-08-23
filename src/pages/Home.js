@@ -7,52 +7,6 @@ import star from "../assets/img/icon/Vectorstar.png";
 import plusVector from "../assets/img/icon/vector-plus.png";
 
 class Home extends React.Component {
-  // state = {
-  //   clicked: 0,
-  // };
-  // componentDidMount() {
-  //   const clicked = localStorage.getItem("clicked");
-  //   if (clicked) this.setState({ clicked: Number(clicked) });
-  // }
-  // render() {
-  //   const { data } = this.props;
-  //   console.log(data);
-  //   return (
-  //     <div className="home-page">
-  //       <Header title="Home" isLogin />
-  //       <main>
-  //         <section>
-  //           <h1>This is title</h1>
-  //           <p>description</p>
-  //         </section>
-  //         <section>
-  //           <div
-  //             className="click-me-btn"
-  //             onClick={() =>
-  //               this.setState((prevState) => {
-  //                 const nextClicked = prevState.clicked + 1;
-  //                 localStorage.setItem("clicked", String(nextClicked));
-  //                 return {
-  //                   clicked: nextClicked,
-  //                 };
-  //               })
-  //             }
-  //           >
-  //             Click me
-  //           </div>
-  //           <p>Button have been clicked {this.state.clicked} times</p>
-  //         </section>
-  //         <Link to="/auth">
-  //           <div>
-  //             <p>Go To Login</p>
-  //           </div>
-  //         </Link>
-  //       </main>
-
-  //       <Footer />
-  //     </div>
-  //   );
-  // }
   componentDidMount() {
     console.log(this.props.location.status);
   }
