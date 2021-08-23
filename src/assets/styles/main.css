@@ -1,0 +1,1075 @@
+/******* ========== MAIN GLOBAL ========== *******/
+*,
+*::before,
+*::after {
+  margin: 0;
+  box-sizing: border-box;
+}
+* {
+  font-family: Nunito;
+}
+a:link,
+a:hover,
+a:visited,
+a:active {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Mulish&display=swap");
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/******* ========== NAVBAR ========== *******/
+nav {
+  padding: 2vh 6% !important;
+}
+.btn-login,
+.btn-register,
+.btn-explore {
+  background-color: white;
+  border: 1px solid#FFCD61;
+  padding: 6px 36px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+.btn-register,
+.btn-explore {
+  background-color: #ffcd61;
+}
+.mail-btn {
+  position: relative;
+  width: 40px;
+  height: 36px;
+  background-image: url(/src/assets/img/icon/mail-icon.png);
+  background-color: rgba(1, 1, 1, 0);
+  background-size: 100%;
+  border: none;
+}
+.mail-notif {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: -10px;
+  background-color: #ffcd61;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-family: "Rubik", sans-serif;
+  font-size: 10px;
+}
+.btn-login:hover,
+.btn-register:hover,
+.btn-explore:hover,
+.btn-save-profile:hover,
+.edit-profile:hover,
+.btn-pay:hover {
+  box-shadow: 0px 0px 20px rgba(251, 143, 29, 0.4);
+}
+.profile-photo {
+  background-position: 0% 30%;
+  background-image: url(/src/assets/img/profile-picture.png);
+  background-repeat: no-repeat;
+}
+.profile-icon {
+  background-size: 100%;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}
+
+/******* ========== APP ========== *******/
+.header-title {
+  margin-right: auto;
+}
+.none {
+  display: none;
+}
+.bg-hero {
+  padding: 69px 6%;
+  height: 767px;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("/src/assets/img/hero-imagejfif.jfif");
+}
+.hero-container {
+  color: white;
+}
+rect {
+  fill: white;
+}
+.title-hero {
+  font-size: 64px;
+  width: 356px;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+}
+.subtitle-hero {
+  padding-top: 74px;
+  font-size: 22px;
+  font-weight: 900;
+}
+.item1 {
+  grid-area: location;
+}
+.item2 {
+  grid-area: type;
+}
+.item3 {
+  grid-area: payment;
+}
+.item4 {
+  grid-area: date;
+}
+.width-dropdown {
+  width: min-content;
+  height: 100%;
+  display: grid;
+  grid-template-areas:
+    "location type"
+    "payment date";
+  grid-gap: 35px;
+}
+.item1,
+.item2,
+.item3,
+.item4 {
+  padding: 10px;
+  border-radius: 6px;
+  opacity: 0.5;
+  width: 250px;
+}
+label {
+  font-size: 0;
+}
+.btn-explore {
+  width: 100%;
+  height: 100%;
+}
+.btn-explore-container {
+  margin-top: 51px;
+  width: 180px;
+  height: 52px;
+}
+
+.main-article {
+  padding: 82px 6%;
+}
+.popular-title-container {
+  padding-bottom: 60px;
+}
+.popular-title {
+  font-family: "Playfair Display", serif;
+  font-size: 36px;
+  font-weight: 700;
+}
+a.text-view {
+  display: flex;
+  align-items: center;
+  color: #fb8f1d !important;
+  transition: 0.3s;
+}
+.text-view:hover {
+  color: #ffcd61 !important;
+}
+.popular-1,
+.popular-2,
+.popular-3,
+.popular-4 {
+  border-radius: 8px;
+  width: 261px;
+  height: 332px;
+  margin: 10px 10px;
+  padding: 0px;
+  background-repeat: no-repeat;
+}
+.popular-1 {
+  background-image: url("/src/assets/img/popular1.jfif");
+  background-size: 100%;
+}
+.popular-2 {
+  background-image: url("/src/assets/img/popular2.jfif");
+  background-size: 105%;
+}
+.popular-3 {
+  background-image: url("/src/assets/img/popular3.jfif");
+  background-size: 200%;
+}
+.popular-4 {
+  background-image: url("/src/assets/img/popular4.jfif");
+  background-size: 200%;
+}
+.name-card-text {
+  background-color: white;
+  width: 120px;
+  height: 56px;
+  border-radius: 0px 6px 0px 0px;
+  padding-top: 6px;
+}
+.green-circle {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom right, #bff0dd, #57d2a3);
+}
+.white-circle {
+  position: absolute;
+  background: white;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+}
+.container-testimonials {
+  display: flex;
+}
+.testimonials-title {
+  font-size: 36px;
+  font-family: "Playfair Display", serif;
+  margin-bottom: 43px;
+  font-weight: 700;
+}
+.review {
+  padding: 75px 0;
+  flex-grow: 1;
+}
+.review-text {
+  padding-top: 1.5em;
+  padding-bottom: 3em;
+  width: 450px;
+  font-size: 24px;
+}
+.founder-circle {
+  font-weight: 700;
+  font-size: 22px;
+}
+.founder-circle > span {
+  font-weight: 400;
+  font-size: 18px;
+}
+.review-photo-container {
+  flex-grow: 1;
+}
+.big-green-circle {
+  top: -21px;
+  right: -21px;
+  position: absolute;
+  height: 42px;
+  width: 42px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom right, #bff0dd, #57d2a3);
+  z-index: -1;
+}
+.big-white-circle {
+  position: absolute;
+  background: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.review-photo {
+  position: relative;
+  width: 384px;
+  height: 491px;
+  background-image: url("/src/assets/img/founder-circle.png");
+  border-radius: 14px;
+  background-size: 195%;
+  background-position: 40% 0%;
+  background-repeat: no-repeat;
+}
+.plus-vector {
+  position: absolute;
+  bottom: -15px;
+  left: -15px;
+}
+.white-box {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 132px;
+  height: 60px;
+  background-color: white;
+  border-radius: 16px 0px 0px 0px;
+}
+.left-button,
+.right-button {
+  position: relative;
+  border: none;
+  background-color: white;
+  margin-top: 20px;
+  margin-left: 10%;
+}
+.left-arrow,
+.right-arrow {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: auto;
+  width: 15px;
+  height: 15px;
+  left: 40%;
+  top: 40%;
+}
+.left-arrow {
+  background-image: url(/src/assets/img/icon/Vector-left-arrow.png);
+}
+.right-arrow {
+  background-image: url(/src/assets/img/icon/Vector-right-arrow.png);
+}
+
+/******* ========== AUTH/LOGIN ========== *******/
+.login-background {
+  background-image: url(/src/assets/img/popular3.jfif);
+  background-size: 100%;
+  background-position: 50% 75%;
+  background-repeat: no-repeat;
+}
+.shadow-container {
+  background: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  width: 100%;
+  padding: 107px 6%;
+}
+.sign-up {
+  justify-content: center;
+  display: flex;
+}
+.login-title {
+  font-family: "Playfair Display", serif;
+  color: white;
+  font-weight: 700;
+  font-size: 64px;
+}
+.no-account {
+  font-weight: 900;
+  color: white;
+  font-size: 24px;
+  margin: 4rem 0 2rem 0;
+}
+.sign-up-btn-custom {
+  width: 391px;
+  height: 79px;
+  border-radius: 10px;
+  background: rgba(57, 57, 57, 1);
+  color: rgba(255, 205, 97, 1);
+  font-weight: 900;
+  font-size: 24px;
+  margin-bottom: 9rem;
+  transition: 0.3s;
+}
+.sign-up-btn-custom:hover,
+.sign-up-btn-custom:active,
+.btn-edit-pass:hover {
+  box-shadow: 0px 0px 20px rgba(37, 20, 2, 0.4);
+}
+.line {
+  border-left: 1px solid white;
+  height: auto;
+  width: 1px;
+  margin: 0px 3rem;
+}
+.login-field > input[type="text"],
+.email-forgot > input[type="text"] {
+  background: rgba(255, 255, 255, 0.26);
+  width: 447px;
+  height: 79px;
+  padding: 12px 20px;
+  margin-top: 34px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+::placeholder {
+  color: white;
+  font-weight: 700;
+  font-size: 24px;
+}
+.forgot-password {
+  padding: 14px 0 49px 0px;
+}
+.forgot-password > a {
+  font-size: 18px;
+  color: white !important;
+  font-family: Mulish, sans-serif;
+}
+.btn-login-page {
+  background-color: #ffcd61;
+  width: 446px;
+  height: 79px;
+  font-size: 24px;
+  border-radius: 10px;
+  font-weight: 900;
+  transition: 0.3s;
+}
+.btn-login-with-google {
+  background-color: white;
+  width: 446px;
+  height: 79px;
+  font-size: 24px;
+  border-radius: 10px;
+  font-weight: 900;
+  margin-top: 57px;
+  transition: 0.3s;
+}
+.btn-login-with-google > img {
+  width: 33px;
+  height: 31px;
+}
+.btn-login-page:hover,
+.btn-login-page:active {
+  box-shadow: 0px 0px 20px rgba(251, 143, 29, 0.4);
+}
+.btn-login-with-google:hover,
+.btn-login-with-google:active {
+  box-shadow: 0px 0px 10px white;
+}
+
+/******* ========== FORGOT ========== *******/
+
+.forgot-password-background {
+  height: 758px;
+  background-image: url(/src/assets/img/forgot-password.webp);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  height: 758px;
+  color: white;
+}
+.back-arrow {
+  background-image: url(/src/assets/img/icon/white-arrow.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.back-arrow > span {
+  color: white;
+  font-weight: 700;
+  size: 24px;
+  margin-left: 2rem;
+}
+.forgot-title {
+  font-family: "Playfair Display";
+  font-weight: 700;
+  font-size: 64px;
+  padding-top: 40px;
+}
+.email-forgot {
+  padding-top: 83px;
+  font-size: 24px;
+}
+.email-forgot > input[type="text"] {
+  text-align: center;
+  border: none;
+}
+.send-link {
+  flex: 1;
+}
+a:link.resend-link-url,
+a:hover.resend-link-url,
+a:visited.resend-link-url,
+a:active.resend-link-url {
+  font-weight: 900;
+  text-decoration: underline;
+  color: white;
+}
+
+/******* ========== PROFILE ========== *******/
+.profile-container {
+  padding: 69px 6%;
+}
+.profile-title {
+  font-weight: 700;
+  font-size: 36px;
+}
+.profile-display {
+  height: 218px;
+  border-radius: 50%;
+  margin: auto;
+  width: 218px;
+  background-size: 100%;
+}
+.edit-profile {
+  margin-top: 75%;
+  float: right;
+  background: #ffcd61;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
+}
+.edit-icon {
+  background-image: url(/src/assets/img/icon/pen.png);
+  background-position: center;
+  background-size: contain;
+  width: 40%;
+  height: 40%;
+  background-repeat: no-repeat;
+}
+.profile-name {
+  font-size: 48px;
+  font-family: "Playfair Display";
+  font-weight: 700;
+}
+p.profile-desc {
+  color: #b8becd;
+  margin-bottom: 3rem;
+  font-weight: 700;
+}
+.gender {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.gender-container {
+  text-align: left;
+  display: block;
+  position: relative;
+  margin: 0 86px 12px 86px;
+  cursor: pointer;
+  font-size: 24px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding-left: 49px;
+}
+/* Hide the browser's default radio button */
+.gender-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 30px;
+  width: 30px;
+  background-color: #eee;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+/* On mouse-over, add a grey background color */
+.gender-container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+/* When the radio button is checked, add a background */
+.gender-container input:checked ~ .checkmark {
+  background-color: #393939;
+}
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+/* Show the indicator (dot/circle) when checked */
+.gender-container input:checked ~ .checkmark:after {
+  display: block;
+}
+/* Style the indicator (dot/circle) */
+.gender-container .checkmark:after {
+  top: 5px;
+  left: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffcd61;
+}
+
+.profile-fields {
+  font-size: 24px;
+}
+.profile-fields-title {
+  font-weight: 900;
+  padding-top: 5rem;
+}
+.profile-fields-subtitle {
+  color: #9f9f9f;
+  padding-top: 29px;
+  font-size: 24px;
+}
+.profile-fields > div > input[type="text"],
+.identity-flex > input[type="text"],
+.identity-flex > input[type="date"] {
+  width: 100%;
+  padding: 26px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid black;
+}
+.identity-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.edit-profile-button > div > a > button {
+  width: 322px;
+  height: 89px;
+  border-radius: 10px;
+  font-weight: 900;
+  font-size: 24px;
+  border: none;
+  padding: 0;
+  transition: 0.3s;
+}
+.btn-save-profile {
+  background: #ffcd61;
+}
+.btn-edit-pass {
+  background: #393939;
+  color: #ffcd61;
+}
+.btn-cancel:hover {
+  color: #ffb618;
+}
+
+/******* ========== RESERVATION ========== *******/
+
+main.reserve-container {
+  padding: 69px 6%;
+}
+.reservation-title {
+  font-weight: 700;
+  font-size: 36px;
+}
+.reservation-title > a > img {
+  width: 28px;
+  height: 46px;
+}
+.reservation-title > span {
+  margin-left: 3rem;
+}
+.reserve-detail {
+  padding: 121px 0 60px 0;
+}
+.reserve-pic {
+  width: 696px;
+  height: 616px;
+  border-radius: 10px;
+  background-image: url(../img/reserve.webp);
+  background-size: 135%;
+  background-position: 45% 0%;
+}
+.product-reserve {
+  margin-left: 30px;
+}
+.reserve-vehicle-name {
+  font-family: "Playfair Display";
+  font-weight: 900;
+  font-size: 3rem;
+}
+.reserve-vehicle-name > span {
+  font-weight: 400;
+  font-size: 36px;
+  font-family: "Playfair Display";
+}
+.no-prepayment {
+  font-weight: 700;
+  font-size: 24px;
+  color: #b8becd;
+}
+.reserve-amount > button,
+.reserve-amount > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+  font-size: 48px;
+  margin: 74px 0px;
+}
+.rmv-btn,
+.add-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+}
+.rmv-btn {
+  background: #efefef;
+}
+.add-btn {
+  background: #ffcd61;
+}
+.reserve-date-title {
+  font-weight: 700;
+  font-size: 24px;
+}
+
+input.reserve-date[type="date"],
+.product-reserve > select {
+  width: 100%;
+  padding: 26px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  background: rgba(57, 57, 57, 0.1);
+  border: none;
+  border-radius: 10px;
+  font-size: 24px;
+  color: #80918e;
+}
+
+.btn-pay {
+  width: 100%;
+  height: 89px;
+  font-size: 24px;
+  background: #ffcd61;
+  border-radius: 10px;
+  border: none;
+  transition: 0.3s;
+  font-weight: 900;
+}
+
+/******* ========== FOOTER ========== *******/
+footer {
+  background-color: #f9f9fb;
+  padding: 1rem 6%;
+}
+.footer-column {
+  padding-left: 5%;
+}
+.footer-column > p {
+  margin-bottom: 8px;
+}
+.footer-line {
+  border: solid 0.5px #c4c4c4;
+  margin: 20px 0px;
+}
+
+/******* ========== QUERY ========== *******/
+
+@media only screen and (max-width: 1200px) {
+  .shadow-container {
+    padding: 20px;
+  }
+  .forgot-password-background {
+    background-size: 125%;
+  }
+  .edit-profile-button > div > a > button {
+    width: 250px;
+    height: 72px;
+    font-size: 24px;
+    padding: 0;
+    margin: 0.5rem 0;
+  }
+  .reserve-pic-container {
+    margin: auto;
+  }
+  .reserve-detail {
+    text-align: center;
+    padding: 50px 0;
+  }
+  .reserve-pic {
+    width: 522px;
+    height: 462px;
+    background-position: 45% 75%;
+  }
+  .product-reserve {
+    margin: 0;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .btn-login,
+  .btn-register {
+    width: 20vh;
+    margin: 8px 0;
+  }
+  .mail-icon > a > img,
+  .profile-icon {
+    margin: 0.5rem 0;
+  }
+  .container-testimonials {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .login-background {
+    background-size: 350%;
+  }
+  .sign-up,
+  .login-field {
+    text-align: center;
+  }
+  .sign-up-btn-custom {
+    margin-bottom: 5rem;
+  }
+  .shadow-container {
+    padding: 10px;
+  }
+  .forgot-password-background {
+    background-size: 200%;
+    background-position: 50% 20%;
+  }
+  .edit-profile-button {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .edit-profile-button > div {
+    width: 100%;
+    text-align: center;
+  }
+  .edit-profile-button > div > a > button {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .footer-flex {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-column {
+    text-align: center;
+    padding: 0px;
+  }
+  .width-dropdown {
+    display: grid;
+    width: 100%;
+    grid-template-areas:
+      "location type"
+      "payment date";
+    grid-gap: 35px;
+    justify-items: center;
+  }
+  .hero-container {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+  .item1,
+  .item2,
+  .item3,
+  .item4 {
+    width: 100%;
+  }
+  .btn-explore-container {
+    margin-top: 5%;
+  }
+  .forgot-password-background {
+    background-size: 470%;
+    height: 850px;
+  }
+  .forgot-title {
+    font-size: 48px;
+  }
+  .email-forgot {
+    padding-top: 2rem;
+  }
+  .profile-container {
+    padding: 6%;
+  }
+  .gender {
+    flex-direction: column;
+  }
+  .identity-container {
+    flex-direction: column;
+  }
+  .identity-container > div {
+    width: 100%;
+  }
+  .profile-title {
+    text-align: center;
+  }
+  .reserve-pic {
+    width: 261px;
+    height: 231px;
+  }
+  .reserve-vehicle-name {
+    font-size: 2rem;
+  }
+  .reserve-vehicle-name > span {
+    font-size: 28px;
+  }
+  .reserve-amount {
+    justify-content: center !important;
+  }
+  .reserve-amount > div {
+    margin: 0 5%;
+  }
+  .reservation-title {
+    font-size: 24px;
+  }
+  .reservation-title > a > img {
+    width: 21px;
+    height: 35px;
+  }
+  main.reserve-container {
+    padding: 6% 6%;
+  }
+  .no-prepayment {
+    font-size: 1rem;
+  }
+  .reserve-amount > button,
+  .reserve-amount > div {
+    font-weight: 700;
+    font-size: 24px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  .rmv-btn,
+  .add-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+  }
+  .reserve-date-title {
+    font-size: 20px;
+  }
+  input.reserve-date[type="date"],
+  .product-reserve > select {
+    width: 100%;
+    padding: 13px 10px;
+    margin: 0.5rem 0;
+    font-size: 18px;
+    color: #80918e;
+  }
+
+  .btn-pay {
+    width: 100%;
+    height: 60px;
+    font-size: 20px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .width-dropdown {
+    grid-template-areas:
+      "location"
+      "type"
+      "payment"
+      "date";
+  }
+  .title-hero {
+    font-size: 36px;
+    width: 100%;
+  }
+  .popular-title,
+  .testimonials-title {
+    font-size: 24px;
+  }
+  .main-article {
+    padding: 2rem 6%;
+  }
+  .subtitle-hero {
+    padding-top: 3rem;
+    font-size: 18px;
+  }
+  .bg-hero {
+    padding: 1rem;
+    height: 650px;
+  }
+  .review {
+    padding: 35px 0;
+  }
+  .review-text {
+    width: 100%;
+    font-size: 18px;
+  }
+  .review-photo {
+    width: 192px;
+    height: 245.5px;
+  }
+  nav {
+    padding: 1vh 4% !important;
+  }
+  .login-background {
+    background-size: 500%;
+  }
+  p.no-account {
+    margin: 32px 0 16px 0px;
+  }
+  .sign-up > div {
+    width: 100%;
+  }
+  .sign-up-btn-custom {
+    width: 100%;
+    height: 60px;
+    margin-bottom: 2rem;
+    font-size: 18px;
+  }
+  .login-title {
+    font-size: 48px;
+  }
+  .login-field > input[type="text"] {
+    width: 100%;
+    height: 60px;
+    padding: 8px 10px;
+    margin-top: 34px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  ::placeholder {
+    font-size: 18px;
+  }
+  .btn-login-page {
+    width: 100%;
+    height: 60px;
+    font-size: 18px;
+  }
+  .btn-login-with-google {
+    width: 100%;
+    height: 60px;
+    font-size: 18px;
+    margin: 2rem 0;
+  }
+  .send-link,
+  .email-forgot {
+    flex-direction: column;
+  }
+  .email-forgot > input {
+    width: 100% !important;
+  }
+  .profile-name {
+    font-size: 28px;
+  }
+  .profile-fields {
+    font-size: 18px;
+  }
+  .profile-fields-title {
+    font-weight: 900;
+    padding-top: 2rem;
+  }
+  .profile-fields-subtitle {
+    color: #9f9f9f;
+    padding-top: 1rem;
+    font-size: 18px;
+  }
+  .profile-fields > div > input[type="text"],
+  .identity-flex > input[type="text"],
+  .identity-flex > input[type="date"] {
+    padding: 1rem 0.5rem;
+    margin: 4px 0;
+  }
+  .edit-profile-button > div > a > button {
+    height: 3.5rem;
+    font-size: large;
+  }
+}
