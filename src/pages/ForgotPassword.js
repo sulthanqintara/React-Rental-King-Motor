@@ -8,7 +8,7 @@ function ForgotPassword() {
     <>
       <main className="forgot-password-background">
         <div className="shadow-container px-5 py-5 ">
-          <a class="back-arrow" href="/login.html">
+          <a class="back-arrow" href="/auth">
             <span>Back</span>
           </a>
           <div class="main-content text-center">

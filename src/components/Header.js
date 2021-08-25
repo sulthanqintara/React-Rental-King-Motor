@@ -1,69 +1,141 @@
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import { Component } from "react";
+import { NavDropdown } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 
-function Header({ status }) {
-  console.log(status);
-  return (
-    <>
-      <header>
-        <Navbar bg="light" expand="lg">
-          <Navbar.Brand href="/">
-            <svg height="3em" width="3em">
-              <circle
-                cx="1.5em"
-                cy="1.5em"
-                r="1em"
-                stroke="white"
-                strokeWidth="3"
-                fill="#393939"
-              />
-              <circle
-                cx="1.5em"
-                cy="1.5em"
-                r=".4em"
-                stroke="white"
-                strokeWidth="3"
-                fill="orange"
-              />
-            </svg>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
-              <Nav.Link href="/" className="active">
-                Home
-              </Nav.Link>
-              <Nav.Link href="#link">Vehicle Types</Nav.Link>
-              <Nav.Link href="#link">History</Nav.Link>
-              <Nav.Link href="#link">About</Nav.Link>
-              <Nav.Link className="py-0 px-8" href="/auth">
-                <button
-                  title={status ? "mail" : "login"}
-                  className={status ? "mail-btn" : "btn-login"}
-                >
-                  <div className={status ? "mail-notif" : "none"}>1</div>
-                  {status ? "" : "Login"}
-                </button>
-              </Nav.Link>
-              <Nav.Link
-                className="py-0 px-8"
-                href={status ? "/profile" : "/auth"}
-              >
-                <button
-                  title={status ? "profile-icon" : "register"}
-                  className={
-                    status ? "profile-icon profile-photo" : "btn-register"
-                  }
-                >
-                  {status ? "" : "Register"}
-                </button>
-              </Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-      </header>
-    </>
-  );
+class Header extends Component {
+  isLogout = () => {
+    localStorage.setItem("token", "");
+    this.props.history.push("/");
+  };
+  render() {
+    // const status = this.props.isLogin;
+    const token = localStorage.getItem("token");
+    return (
+      <>
+        <header>
+          <Navbar bg="light" expand="lg">
+            <Navbar.Brand href="/">
+              <svg height="3em" width="3em">
+                <circle
+                  cx="1.5em"
+                  cy="1.5em"
+                  r="1em"
+                  stroke="white"
+                  strokeWidth="3"
+                  fill="#393939"
+                />
+                <circle
+                  cx="1.5em"
+                  cy="1.5em"
+                  r=".4em"
+                  stroke="white"
+                  strokeWidth="3"
+                  fill="orange"
+                />
+              </svg>
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="ms-auto">
+                <Nav.Link href="/" className="active">
+                  Home
+                </Nav.Link>
+                <Nav.Link href="/vehicle-type">Vehicle Types</Nav.Link>
+                <Nav.Link href="/history">History</Nav.Link>
+                <Nav.Link href="#">About</Nav.Link>
+                {token ? (
+                  <div className="mail-btn mx-3">
+                    <div className="mail-notif">1</div>
+                    <NavDropdown className="mail-dropdown" title="" id="">
+                      <NavDropdown.Item href="/chat">
+                        <div className="d-flex justify-content-between pb-2">
+                          <div className="fw-bold">User 1</div>
+                          <div className="ps-5">Just now</div>
+                        </div>
+                        <div className="fw-bold">
+                          Hey, there are 3 vespa left
+                        </div>
+                      </NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item href="/chat">
+                        <div className="d-flex justify-content-between pb-2">
+                          <div className="fw-bold">User 2</div>
+                          <div className="ps-5">Yesterday</div>
+                        </div>
+                        <div className="">
+                          Okay, thank you for the good service
+                        </div>
+                      </NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item href="/chat">
+                        <div className="d-flex justify-content-between pb-2">
+                          <div className="fw-bold">User 1</div>
+                          <div className="ps-5">Yesterday</div>
+                        </div>
+                        <div className="fw-bold">
+                          Hey, there are 3 vespa left
+                        </div>
+                      </NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item href="/chat">
+                        <div className="d-flex justify-content-between pb-2">
+                          <div className="fw-bold">User 2</div>
+                          <div className="ps-5">Yesterday</div>
+                        </div>
+                        <div className="">
+                          Okay, thank you for the good service
+                        </div>
+                      </NavDropdown.Item>
+                      <NavDropdown.Divider />
+                    </NavDropdown>
+                  </div>
+                ) : (
+                  <Nav.Link href="/auth">
+                    <button title="login" className="btn-login ">
+                      Login
+                    </button>
+                  </Nav.Link>
+                )}
+                {token ? (
+                  <NavDropdown
+                    className="profile-icon profile-photo"
+                    title=""
+                    id=""
+                  >
+                    <NavDropdown.Item href="/profile">
+                      <div className="fw-bold pb-2">Edit Profile</div>
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="#">
+                      <div className="fw-bold pb-2">Help</div>
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item className="">
+                      <button
+                        className="fw-bold p-0 logout-btn"
+                        onClick={this.isLogout}
+                      >
+                        Logout
+                      </button>
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                  </NavDropdown>
+                ) : (
+                  <Nav.Link href="/auth">
+                    <button title="login" className="btn-register ">
+                      register
+                    </button>
+                  </Nav.Link>
+                )}
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
+        </header>
+      </>
+    );
+  }
 }
 
-export default Header;
+export default withRouter(Header);

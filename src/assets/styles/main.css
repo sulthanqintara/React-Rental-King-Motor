@@ -35,7 +35,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
+.yellow-btn {
+  background-color: #ffcd61;
+  border: 1px solid#FFCD61;
+  padding: 6px 36px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
 /******* ========== NAVBAR ========== *******/
 nav {
   padding: 2vh 6% !important;
@@ -81,7 +87,10 @@ nav {
 .btn-explore:hover,
 .btn-save-profile:hover,
 .edit-profile:hover,
-.btn-pay:hover {
+.btn-pay:hover,
+button.reserve-from-detail:hover,
+.booking-code-btn:hover,
+.finish-payment-btn:hover {
   box-shadow: 0px 0px 20px rgba(251, 143, 29, 0.4);
 }
 .profile-photo {
@@ -95,8 +104,31 @@ nav {
   height: 55px;
   border-radius: 50%;
 }
+a.dropdown-toggle.nav-link::after,
+a.dropdown-toggle.nav-link::before {
+  border: none;
+}
+.dropdown-menu.show {
+  padding: 33px 24px 8px 24px !important;
+}
 
-/******* ========== APP ========== *******/
+div.profile-icon > .dropdown-menu[data-bs-popper] {
+  left: -100px;
+  margin-top: 1.5rem;
+}
+.logout-btn {
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  text-align: left;
+}
+div.mail-dropdown > .dropdown-menu[data-bs-popper] {
+  left: -300px;
+  margin-top: 1.5rem;
+  min-width: 200px;
+}
+
+/******* ========== HOME ========== *******/
 .header-title {
   margin-right: auto;
 }
@@ -159,9 +191,7 @@ rect {
   opacity: 0.5;
   width: 250px;
 }
-label {
-  font-size: 0;
-}
+
 .btn-explore {
   width: 100%;
   height: 100%;
@@ -192,17 +222,7 @@ a.text-view {
 .text-view:hover {
   color: #ffcd61 !important;
 }
-.popular-1,
-.popular-2,
-.popular-3,
-.popular-4 {
-  border-radius: 8px;
-  width: 261px;
-  height: 332px;
-  margin: 10px 10px;
-  padding: 0px;
-  background-repeat: no-repeat;
-}
+
 .popular-1 {
   background-image: url("/src/assets/img/popular1.jfif");
   background-size: 100%;
@@ -218,6 +238,16 @@ a.text-view {
 .popular-4 {
   background-image: url("/src/assets/img/popular4.jfif");
   background-size: 200%;
+}
+.card-image {
+  background-position: center;
+  border-radius: 8px;
+  width: 261px;
+  height: 332px;
+  margin: 10px 10px;
+  padding: 0px;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .name-card-text {
   background-color: white;
@@ -349,6 +379,9 @@ a.text-view {
   width: 100%;
   padding: 107px 6%;
 }
+.padding-register {
+  padding: 50px 6%;
+}
 .sign-up {
   justify-content: center;
   display: flex;
@@ -378,7 +411,8 @@ a.text-view {
 }
 .sign-up-btn-custom:hover,
 .sign-up-btn-custom:active,
-.btn-edit-pass:hover {
+.btn-edit-pass:hover,
+button.chat-admin:hover {
   box-shadow: 0px 0px 20px rgba(37, 20, 2, 0.4);
 }
 .line {
@@ -387,7 +421,7 @@ a.text-view {
   width: 1px;
   margin: 0px 3rem;
 }
-.login-field > input[type="text"],
+.login-field > form > input,
 .email-forgot > input[type="text"] {
   background: rgba(255, 255, 255, 0.26);
   width: 447px;
@@ -399,7 +433,8 @@ a.text-view {
   border-radius: 4px;
   box-sizing: border-box;
 }
-::placeholder {
+.login-field > form > input::placeholder,
+.email-forgot > input[type="text"]::placeholder {
   color: white;
   font-weight: 700;
   font-size: 24px;
@@ -692,7 +727,7 @@ main.reserve-container {
 .no-prepayment {
   font-weight: 700;
   font-size: 24px;
-  color: #b8becd;
+  color: #9b0a0a;
 }
 .reserve-amount > button,
 .reserve-amount > div {
@@ -744,10 +779,304 @@ input.reserve-date[type="date"],
   font-weight: 900;
 }
 
+/******* ========== VEHICLE ========== *******/
+main.vehicle-types-container {
+  padding: 69px 6%;
+}
+input#vehicleName {
+  background: rgba(255, 255, 255, 0.26);
+  width: 100%;
+  height: 79px;
+  padding: 12px 20px;
+  margin-top: 34px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input#vehicleName::placeholder {
+  color: #b8becd;
+  font-weight: 400;
+}
+.vehicle-list {
+  padding: 69px 6%;
+}
+.car-2 {
+  background-image: url("https://user-images.githubusercontent.com/38064315/130649294-e7a3bf3c-2cd1-4091-88fd-3d73fe4e8c97.jpg");
+}
+.car-4 {
+  background-image: url("https://user-images.githubusercontent.com/38064315/130650291-09e9a5a4-c62c-4edf-8fc3-c8d234dca9fc.jpg");
+}
+.motor-1 {
+  background-image: url("https://user-images.githubusercontent.com/38064315/130650803-5a568c0c-c991-4492-a95c-ccec2a70cc47.jpg");
+  background-position-x: 20%;
+}
+.motor-3 {
+  background-image: url("https://user-images.githubusercontent.com/38064315/130651301-89e91b51-92c2-44be-af18-87015266e220.jpg");
+}
+.bike-1 {
+  background-image: url("https://user-images.githubusercontent.com/38064315/130651829-6619742b-4f34-4ee2-ae9c-9fb511863936.jpg");
+}
+.bike-2 {
+  background-image: url("https://user-images.githubusercontent.com/38064315/130652289-e2df5063-42db-42d6-9c1c-db5a08d1c950.jpg");
+}
+.bike-3 {
+  background-image: url("https://user-images.githubusercontent.com/38064315/130652795-01e66a12-a4d5-4a70-8eef-f33315c549fe.jpg");
+}
+.bike-4 {
+  background-image: url("https://user-images.githubusercontent.com/38064315/130670231-c21ab040-c192-45a1-b882-7448866b9b80.jpg");
+}
+
+/******* ========== MORE DETAIL ========== *******/
+
+.detail-pic-container {
+  flex: 3;
+}
+.more-detail-container {
+  flex: 2;
+}
+.more-detail-big-pic {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+.remove-btn-style {
+  border: none;
+  background-color: transparent;
+}
+.small-arrow {
+  height: 31px;
+  width: 22px;
+}
+.more-detail-small-pic {
+  width: 233px;
+  height: 158px;
+  border-radius: 10px;
+}
+.flip-image {
+  transform: scaleX(-1);
+}
+.available-color {
+  color: #087e0d;
+  font-size: 24px;
+  font-weight: 700;
+}
+.detail-text {
+  font-size: 24px;
+}
+.detail-btn-container {
+  margin-top: 1rem;
+}
+.detail-btn-container > a > button {
+  transition: 0.3s;
+  height: 89px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 24px;
+  width: 100%;
+  border: none;
+}
+button.chat-admin,
+button.like-btn {
+  background: #393939;
+  color: #ffcd61;
+}
+button.reserve-from-detail {
+  background-color: #ffcd61;
+}
+button.like-btn > img {
+  height: 52px;
+  width: 52px;
+  margin-right: 27px;
+}
+a.like-btn {
+  flex: 1.5;
+}
+a.reserve-from-detail {
+  flex: 3;
+}
+a.chat-admin {
+  flex: 3;
+}
+
+/******* ========== PAYMENT ========== *******/
+
+div.payment-pic {
+  flex: 2;
+}
+div.payment-title-container {
+  flex: 3;
+}
+img.payment-pic {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.booking-code {
+  font-weight: 700;
+  font-size: 36px;
+  font-family: "Playfair Display";
+}
+.booking-code-btn {
+  transition: 0.3s;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 24px;
+  border: none;
+  background: #ffcd61;
+}
+.payment-main > div.payment-row-1 > div,
+.payment-main > div.payment-row-2 > div {
+  font-size: 24px;
+  border: 1px solid #80918e;
+  border-radius: 10px;
+}
+.payment-row-1 > div,
+.payment-row-2 > div {
+  margin: 1rem;
+  padding: 42px 98px;
+}
+.order-details-container,
+.payment-quantity {
+  flex: 2;
+}
+.payer-identity-container,
+.reservation-date {
+  flex: 3;
+}
+.payment-row-3 {
+  font-size: 24px;
+  font-weight: 700;
+}
+.payment-code-container {
+  flex: 3;
+}
+.payment-methods {
+  flex: 2;
+}
+.payment-code-title {
+  font-size: 32px;
+  margin: 1rem;
+}
+.payment-code {
+  flex: 1;
+}
+.payment-code,
+select.payment-methods {
+  border: 1px solid #80918e;
+  border-radius: 10px;
+  margin: 1rem;
+  padding: 28px 33px;
+  font-weight: 700;
+  color: #80918e;
+}
+.payment-copy {
+  padding: 0 34px;
+  color: #ffcd61;
+  background-color: #393939;
+  font-weight: 700;
+  height: 42px;
+  border-radius: 10px;
+}
+.finish-payment-btn {
+  width: 100%;
+  height: 89px;
+  background: #ffcd61;
+  border-radius: 10px;
+  transition: 0.3s;
+  font-weight: 900;
+  font-size: 24px;
+  border: none;
+}
+.finish-payment-btn > span {
+  color: red;
+}
+
+/******* ========== CHAT DETAIL ========== *******/
+
+.chat-detail-profile-icon {
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  border-radius: 50%;
+  margin-left: 5%;
+}
+.chat-item {
+  border: 1px solid #c4c4c4;
+  border-radius: 10px;
+  padding: 35px;
+}
+.chat-item-pic,
+.chat-item-details,
+.chat-item-name {
+  flex: 1;
+  margin: 0 1rem;
+}
+.chat-item-pic > img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+.chat-item-name {
+  font-family: "Playfair Display";
+  font-weight: 900;
+  font-size: 36px;
+}
+.chats {
+  font-size: 24px;
+}
+.chat-user,
+.chat-renter {
+  border-radius: 10px;
+  padding: 31px 50px;
+}
+.chat-user {
+  color: #ffcd61;
+  background: #393939;
+}
+.time-delivered {
+  margin: 5px 0px;
+  color: #b8becd;
+}
+.chat-renter {
+  background: #ffcd61;
+}
+.chat-section {
+  position: relative;
+}
+.chat-form {
+  font-size: 24px;
+}
+.chat-form > input {
+  width: 100%;
+  padding: 30px 55px;
+  background: #f6f6f6;
+  border-radius: 10px;
+  color: black;
+  border: none;
+}
+.chat-form > input::placeholder {
+  font-weight: 400;
+  color: #b8becd;
+  opacity: 1;
+}
+.chat-section > button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: none;
+  background-color: transparent;
+}
+.chat-section > button > img {
+  height: 40px;
+  width: 40px;
+}
+
 /******* ========== FOOTER ========== *******/
 footer {
   background-color: #f9f9fb;
-  padding: 1rem 6%;
+  padding: 2rem 6%;
 }
 .footer-column {
   padding-left: 5%;
@@ -790,6 +1119,21 @@ footer {
   }
   .product-reserve {
     margin: 0;
+  }
+  .login-background {
+    background-size: 150%;
+  }
+  .payment-row-3 {
+    flex-direction: column;
+  }
+  .payment-row-1 > div,
+  .payment-row-2 > div {
+    margin: 1rem;
+    padding: 2vh 5%;
+  }
+  .chat-item {
+    flex-direction: column;
+    width: 50%;
   }
 }
 
@@ -836,6 +1180,32 @@ footer {
   }
   .edit-profile-button > div > a > button {
     width: 100%;
+  }
+  .payment-row-1,
+  .payment-row-2 {
+    flex-direction: column;
+  }
+  button.chat-admin,
+  button.reserve-from-detail,
+  button.like-btn {
+    margin: 1rem 0;
+  }
+  a.chat-admin,
+  a.reserve-from-detail,
+  a.like-btn {
+    padding: 0 !important;
+  }
+  div.mail-dropdown > .dropdown-menu[data-bs-popper] {
+    position: absolute;
+    left: 0px;
+    margin-top: 0;
+    padding: 0.5rem !important;
+  }
+  .dropdown-menu[data-bs-popper] > a {
+    padding: 5px !important;
+  }
+  .chat-item {
+    width: 65%;
   }
 }
 
@@ -955,6 +1325,43 @@ footer {
     height: 60px;
     font-size: 20px;
   }
+  .payment-main > div.payment-row-1 > div,
+  .payment-main > div.payment-row-2 > div {
+    font-size: 18px;
+  }
+  .payment-code-title {
+    font-size: 1.5rem;
+  }
+  .payment-row-3 {
+    font-size: 1rem;
+  }
+  .finish-payment-btn {
+    height: 7vh;
+  }
+  .payment-code-container {
+    flex-direction: column;
+  }
+  .payment-code {
+    width: 95%;
+  }
+  .more-detail-small-pic {
+    width: 117px;
+    height: 79px;
+    margin: 0 0.5rem !important;
+  }
+  .slide-image > button {
+    margin: 0 !important;
+  }
+  .small-arrow {
+    height: 16px;
+    width: 11px;
+  }
+  a.reserve-from-detail {
+    padding: 0;
+  }
+  .chat-item {
+    width: 75%;
+  }
 }
 
 @media only screen and (max-width: 576px) {
@@ -1016,7 +1423,7 @@ footer {
   .login-title {
     font-size: 48px;
   }
-  .login-field > input[type="text"] {
+  .login-field > form > input {
     width: 100%;
     height: 60px;
     padding: 8px 10px;
@@ -1071,5 +1478,24 @@ footer {
   .edit-profile-button > div > a > button {
     height: 3.5rem;
     font-size: large;
+  }
+  .payment-code {
+    flex-direction: column;
+  }
+  .payment-copy {
+    margin: 1rem;
+  }
+  .chat-item {
+    width: 100%;
+  }
+  .chat-item-name {
+    font-size: 1.5rem;
+  }
+  .chats {
+    font-size: 1.25rem;
+  }
+  .chat-user,
+  .chat-renter {
+    padding: 1rem;
   }
 }

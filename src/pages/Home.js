@@ -1,19 +1,46 @@
-import React from "react";
+import { Component } from "react";
 import { Link } from "react-router-dom";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import star from "../assets/img/icon/Vectorstar.png";
 import plusVector from "../assets/img/icon/vector-plus.png";
+import Card from "../components/Cards";
 
-class Home extends React.Component {
-  componentDidMount() {
-    console.log(this.props.location.status);
-  }
+class Home extends Component {
+  state = {
+    popular: [
+      {
+        id: 1,
+        title: "Merapi",
+        subtitle: "Yogyakarta",
+        picture: "popular-1",
+      },
+      {
+        id: 2,
+        title: "Teluk Bogam",
+        subtitle: "Kalimantan",
+        picture: "popular-2",
+      },
+      {
+        id: 3,
+        title: "Bromo",
+        subtitle: "Malang",
+        picture: "popular-3",
+      },
+      {
+        id: 4,
+        title: "Malioboro",
+        subtitle: "Yogyakarta",
+        picture: "popular-4",
+      },
+    ],
+  };
   render() {
+    const data = this.state.popular;
     return (
       <div className="HomePage">
-        <Header status={this.props.location.status} />
+        <Header isLogin={this.props.isLogin} />
         <main>
           <section className="bg-hero">
             <div className="hero-container d-flex flex-column">
@@ -69,7 +96,6 @@ class Home extends React.Component {
                   name="DD/MM/YY"
                   placeholder=""
                 />
-                <label htmlFor="DD/MM/YY">Choose your date</label>
               </div>
               <Link className="btn-explore-container" to="/">
                 <button title="explore" className="btn-explore">
@@ -79,45 +105,25 @@ class Home extends React.Component {
             </div>
           </section>
           <section className="main-article">
-            <section className="popular">
-              <div className="d-flex justify-content-between popular-title-container">
-                <div className="popular-title">Popular in Town</div>
-                <Link to="#" className="text-view">
-                  View all <span className="fw-bolder">&nbsp;&nbsp;&gt;</span>
-                </Link>
-              </div>
-              <div className="row justify-content-around align-items-center mb-5">
-                <div className="col-3 popular-1 d-flex align-items-end">
-                  <div className="name-card-text">
-                    <div className="fw-bolder">Merapi</div>
-                    Yogyakarta
-                  </div>
-                </div>
-                <div className="col-3 popular-2 d-flex align-items-end">
-                  <div className="name-card-text">
-                    <div className="fw-bolder">Teluk Bogam</div>
-                    Kalimantan
-                  </div>
-                </div>
-                <div className="col-3 popular-3 d-flex align-items-end">
-                  <div className="name-card-text">
-                    <div className="fw-bolder">Bromo</div>
-                    Malang
-                  </div>
-                </div>
-                <div className="col-3 popular-4 d-flex align-items-end">
-                  <div className="name-card-text">
-                    <div className="fw-bolder">Malioboro</div>
-                    Yogyakarta
-                  </div>
-                </div>
-              </div>
-              <div className="d-flex justify-content-center">
-                <div className="d-flex green-circle justify-content-center align-items-center">
-                  <div className="white-circle"></div>
-                </div>
-              </div>
-            </section>
+            <div className="d-flex justify-content-between popular-title-container">
+              <div className="popular-title">Popular in Town</div>
+              <Link to={"/vehicle-type"} className="text-view">
+                View all <span className="fw-bolder">&nbsp;&nbsp;&gt;</span>
+              </Link>
+            </div>
+            <div className="row justify-content-around align-items-center mb-5">
+              {data.map((data) => {
+                return (
+                  <Card
+                    key={data.id}
+                    link={`/detail/${data.id}`}
+                    item={data.picture}
+                    title={data.title}
+                    subtitle={data.subtitle}
+                  />
+                );
+              })}
+            </div>
             <section className="testimonials">
               <div className="testimonials-title">Testimonials</div>
               <div className="container-testimonials">

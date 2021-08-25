@@ -1,14 +1,11 @@
-import React from "react";
+import { Component } from "react";
 import { Link } from "react-router-dom";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import backIcon from "../assets/img/icon/arrow-left.png";
 
-class Reservation extends React.Component {
-  state = {
-    reserved: 1,
-  };
+class Reservation extends Component {
   render() {
     return (
       <>
@@ -39,32 +36,11 @@ class Reservation extends React.Component {
               </p>
               <p className="no-prepayment">No Prepayment</p>
               <div className="d-flex justify-content-between flex-row reserve-amount">
-                <button
-                  className="rmv-btn"
-                  onClick={() =>
-                    this.setState((prevState) => {
-                      console.log(prevState);
-                      if (prevState.reserved > 1)
-                        return {
-                          reserved: prevState.reserved - 1,
-                        };
-                    })
-                  }
-                >
+                <button className="rmv-btn" onClick={this.props.rmvReserve}>
                   -
                 </button>
-                <div className="amount-added">{this.state.reserved}</div>
-                <button
-                  className="add-btn"
-                  onClick={() =>
-                    this.setState((prevState) => {
-                      console.log(prevState);
-                      return {
-                        reserved: prevState.reserved + 1,
-                      };
-                    })
-                  }
-                >
+                <div className="amount-added">{this.props.reservedState}</div>
+                <button className="add-btn" onClick={this.props.addReserve}>
                   +
                 </button>
               </div>
@@ -87,9 +63,9 @@ class Reservation extends React.Component {
               </select>
             </div>
           </section>
-          <Link to="#">
+          <Link to="/payment">
             <button className="btn-pay">
-              Pay now : Rp. {this.state.reserved * 64000}
+              Pay now : Rp. {this.props.reservedState * 64000}
             </button>
           </Link>
         </main>
