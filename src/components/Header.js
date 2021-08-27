@@ -9,6 +9,7 @@ class Header extends Component {
     localStorage.setItem("token", "");
     this.props.history.push("/");
   };
+
   render() {
     // const status = this.props.isLogin;
     const token = localStorage.getItem("token");
@@ -104,11 +105,19 @@ class Header extends Component {
                     title=""
                     id=""
                   >
-                    <NavDropdown.Item href="/profile">
+                    <NavDropdown.Item
+                      onClick={() => {
+                        this.props.history.push("/profile");
+                      }}
+                    >
                       <div className="fw-bold pb-2">Edit Profile</div>
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item href="#">
+                    <NavDropdown.Item
+                      onClick={() => {
+                        this.props.history.push("/");
+                      }}
+                    >
                       <div className="fw-bold pb-2">Help</div>
                     </NavDropdown.Item>
                     <NavDropdown.Divider />

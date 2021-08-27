@@ -43,7 +43,6 @@ class AppWithRouter extends Component {
   }
 
   render() {
-    console.log(this.state.isLogin);
     return (
       <Router>
         <Route path="/" exact render={() => <Home />} />
@@ -92,24 +91,36 @@ class AppWithRouter extends Component {
         />
         <Route
           path="/reservation"
-          render={() => (
-            <Reservation
-              addReserve={this.addReserve}
-              rmvReserve={this.rmvReserve}
-              reservedState={this.state.reserved}
-            />
-          )}
+          render={() => {
+            if (this.state.isLogin) {
+              return (
+                <Reservation
+                  addReserve={this.addReserve}
+                  rmvReserve={this.rmvReserve}
+                  reservedState={this.state.reserved}
+                />
+              );
+            } else {
+              return <Redirect to="/" />;
+            }
+          }}
         />
         <Route path="/vehicle-type" component={vehicleType} />
         <Route
           path="/detail/:id"
-          render={() => (
-            <ViewDetail
-              addReserve={this.addReserve}
-              rmvReserve={this.rmvReserve}
-              reservedState={this.state.reserved}
-            />
-          )}
+          render={() => {
+            if (this.state.isLogin) {
+              return (
+                <ViewDetail
+                  addReserve={this.addReserve}
+                  rmvReserve={this.rmvReserve}
+                  reservedState={this.state.reserved}
+                />
+              );
+            } else {
+              return <Redirect to="/" />;
+            }
+          }}
         />
         <Route
           path="/payment"
@@ -134,10 +145,10 @@ class AppWithRouter extends Component {
         <Route
           path="/history"
           render={() => {
-            if (this.state.token !== "") {
+            if (this.state.isLogin) {
               return <History />;
             } else {
-              return <Redirect to="/auth" />;
+              return <Redirect to="/" />;
             }
           }}
         />
