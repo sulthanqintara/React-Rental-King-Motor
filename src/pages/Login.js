@@ -13,7 +13,7 @@ class Login extends Component {
   render() {
     const email = this.state.email;
     const password = this.state.password;
-    const onSubmit = () => {
+    const submitHandler = () => {
       const form = new URLSearchParams();
       form.append("email", email);
       form.append("password", password);
@@ -86,7 +86,7 @@ class Login extends Component {
                 <Link to="/forgot">Forgot Password?</Link>
               </div>
               <div>
-                <button className="btn-login-page" onClick={onSubmit}>
+                <button className="btn-login-page" onClick={submitHandler}>
                   Login
                 </button>
               </div>

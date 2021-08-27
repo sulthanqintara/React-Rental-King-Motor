@@ -17,6 +17,7 @@ class AppWithRouter extends Component {
   state = {
     reserved: 1,
     token: "",
+    isLogin: false,
   };
   addReserve = () => {
     this.setState((prevState) => {
@@ -34,32 +35,58 @@ class AppWithRouter extends Component {
       }
     });
   };
-  checkLogin = (page) => {
-    if (this.token !== "") {
-      console.log(this.token);
-      return <Redirect to={"/" + page} />;
-    } else {
-      return <Redirect to="/auth" />;
+  componentDidMount() {
+    const data = localStorage.getItem("token");
+    if (data) {
+      this.setState({ isLogin: true });
     }
-  };
-
-  token = localStorage.getItem("token");
+  }
 
   render() {
+    console.log(this.state.isLogin);
     return (
       <Router>
         <Route path="/" exact render={() => <Home />} />
-        <Route path="/auth" render={() => <Login />} />
-        <Route path="/register" component={Register} />
-        <Route path="/forgot" component={ForgotPassword} />
+        <Route
+          path="/auth"
+          render={() => {
+            console.log(this.state.isLogin);
+            if (!this.state.isLogin) {
+              return <Login />;
+            } else {
+              return <Redirect to="/" />;
+            }
+          }}
+        />
+        <Route
+          path="/register"
+          render={() => {
+            console.log(this.state.isLogin);
+            if (!this.state.isLogin) {
+              return <Register />;
+            } else {
+              return <Redirect to="/" />;
+            }
+          }}
+        />
+        <Route
+          path="/forgot"
+          render={() => {
+            if (!this.state.isLogin) {
+              return <ForgotPassword />;
+            } else {
+              return <Redirect to="/" />;
+            }
+          }}
+        />
         <Route
           path="/profile"
           render={() => {
-            if (this.token !== "") {
-              console.log(this.token);
+            console.log(this.state.isLogin);
+            if (this.state.isLogin) {
               return <Profile />;
             } else {
-              return <Redirect to="/auth" />;
+              return <Redirect to="/" />;
             }
           }}
         />
@@ -84,9 +111,36 @@ class AppWithRouter extends Component {
             />
           )}
         />
-        <Route path="/payment" render={() => <Payment />} />
-        <Route path="/chat" render={() => <ChatDetail />} />
-        <Route path="/history" render={() => <History />} />
+        <Route
+          path="/payment"
+          render={() => {
+            if (this.state.token !== "") {
+              return <Payment />;
+            } else {
+              return <Redirect to="/auth" />;
+            }
+          }}
+        />
+        <Route
+          path="/chat"
+          render={() => {
+            if (this.state.token !== "") {
+              return <ChatDetail />;
+            } else {
+              return <Redirect to="/auth" />;
+            }
+          }}
+        />
+        <Route
+          path="/history"
+          render={() => {
+            if (this.state.token !== "") {
+              return <History />;
+            } else {
+              return <Redirect to="/auth" />;
+            }
+          }}
+        />
       </Router>
     );
   }

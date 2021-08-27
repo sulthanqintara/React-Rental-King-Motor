@@ -127,6 +127,17 @@ div.mail-dropdown > .dropdown-menu[data-bs-popper] {
   margin-top: 1.5rem;
   min-width: 200px;
 }
+.navbar-nav > a {
+  padding: 5px;
+  color: #a8a8a8;
+  transition: 0.3s;
+}
+.navbar-nav > a:hover {
+  color: black;
+}
+.navbar-nav > a.active {
+  color: black;
+}
 
 /******* ========== HOME ========== *******/
 .header-title {

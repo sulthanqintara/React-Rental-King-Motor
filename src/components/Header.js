@@ -2,7 +2,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { Component } from "react";
 import { NavDropdown } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 class Header extends Component {
   isLogout = () => {
@@ -38,13 +38,13 @@ class Header extends Component {
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="ms-auto">
-                <Nav.Link href="/" className="active">
+              <Nav className="ms-auto align-items-center">
+                <Link className="active" to="/">
                   Home
-                </Nav.Link>
-                <Nav.Link href="/vehicle-type">Vehicle Types</Nav.Link>
-                <Nav.Link href="/history">History</Nav.Link>
-                <Nav.Link href="#">About</Nav.Link>
+                </Link>
+                <Link to="/vehicle-type">Vehicle Types</Link>
+                <Link to="/history">History</Link>
+                <Link to="/about">About</Link>
                 {token ? (
                   <div className="mail-btn mx-3">
                     <div className="mail-notif">1</div>
