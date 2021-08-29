@@ -16,7 +16,6 @@ import History from "./History";
 class AppWithRouter extends Component {
   state = {
     reserved: 1,
-    token: "",
     isLogin: false,
   };
   addReserve = () => {
@@ -108,27 +107,22 @@ class AppWithRouter extends Component {
         <Route path="/vehicle-type" component={vehicleType} />
         <Route
           path="/detail/:id"
-          render={() => {
-            if (this.state.isLogin) {
-              return (
-                <ViewDetail
-                  addReserve={this.addReserve}
-                  rmvReserve={this.rmvReserve}
-                  reservedState={this.state.reserved}
-                />
-              );
-            } else {
-              return <Redirect to="/" />;
-            }
-          }}
+          render={(props) => (
+            <ViewDetail
+              addReserve={this.addReserve}
+              rmvReserve={this.rmvReserve}
+              reservedState={this.state.reserved}
+              {...props}
+            />
+          )}
         />
         <Route
           path="/payment"
           render={() => {
-            if (this.state.token !== "") {
+            if (this.state.isLogin) {
               return <Payment />;
             } else {
-              return <Redirect to="/auth" />;
+              return <Redirect to="/" />;
             }
           }}
         />

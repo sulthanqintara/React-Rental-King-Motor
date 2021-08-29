@@ -53,18 +53,18 @@ class Payment extends Component {
             <div className="d-flex justify-content-between payment-row-2">
               <div className="order-details-container ">
                 <p className="order-details-title">Order details</p>
-                <p className="order-details">
+                <div className="order-details">
                   <div>1 bike : Rp. 64000</div>
                   <div>1 bike : Rp. 64000</div>
-                </p>
+                </div>
                 <p className="order-details-total fw-bold">Total : 128.000</p>
               </div>
               <div className="payer-identity-container">
                 <p className="payer-identity-title">Identity :</p>
-                <p className="payer-identity">
+                <div className="payer-identity">
                   <div>Identity : Samantha Doe (+6290987682)</div>
                   <div>samanthadoe@mail.com</div>
-                </p>
+                </div>
               </div>
             </div>
             <div className="d-flex justify-content-between payment-row-3">

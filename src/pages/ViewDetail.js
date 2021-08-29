@@ -4,8 +4,42 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import backIcon from "../assets/img/icon/arrow-left.png";
 import likeIcon from "../assets/img/icon/like-icon.png";
+import Axios from "axios";
+
 class ViewDetail extends Component {
+  state = {
+    amount_available: 0,
+    category: "",
+    id: 0,
+    location: "",
+    model: "",
+    picture: "",
+    price: 0,
+  };
+  componentDidMount() {
+    const idParams = this.props.match.params.id;
+    const url = "http://localhost:8000/vehicles";
+    Axios.get(url, {
+      params: { id: String(idParams) },
+    })
+      .then(({ data }) => {
+        console.log(data.result);
+        this.setState({
+          amount_available: data.result[0].amount_available,
+          category: data.result[0].category,
+          id: data.result[0].id,
+          location: data.result[0].location,
+          model: data.result[0].model,
+          picture: data.result[0].picture,
+          price: data.result[0].price,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   render() {
+    const pic = this.state.picture;
     return (
       <>
         <Header />
@@ -27,9 +61,7 @@ class ViewDetail extends Component {
                 <img
                   className="more-detail-big-pic"
                   alt=""
-                  src={
-                    "https://user-images.githubusercontent.com/38064315/130670231-c21ab040-c192-45a1-b882-7448866b9b80.jpg"
-                  }
+                  src={pic.split(",")[0]}
                 />
               </div>
               <div className="d-flex align-items-center mt-5 justify-content-center slide-image">
@@ -39,17 +71,17 @@ class ViewDetail extends Component {
                 <img
                   className="more-detail-small-pic mx-3"
                   alt=""
-                  src={
-                    "https://user-images.githubusercontent.com/38064315/130670231-c21ab040-c192-45a1-b882-7448866b9b80.jpg"
-                  }
+                  src={pic.split(",")[0]}
                 />
-                <img
-                  className="more-detail-small-pic mx-3"
-                  alt=""
-                  src={
-                    "https://user-images.githubusercontent.com/38064315/130670231-c21ab040-c192-45a1-b882-7448866b9b80.jpg"
-                  }
-                />
+                {pic.split(",")[1] ? (
+                  <img
+                    className="more-detail-small-pic mx-3"
+                    alt=""
+                    src={pic.split(",")[1]}
+                  />
+                ) : (
+                  ""
+                )}
                 <button className="remove-btn-style mx-3">
                   <img
                     alt=""
@@ -73,7 +105,7 @@ class ViewDetail extends Component {
                 <br /> Reservation before 2 PM
               </p>
               <p className="reserve-vehicle-name d-flex justify-content-end">
-                Rp. {this.props.reservedState * 64000}/day
+                Rp. {this.props.reservedState * this.state.price}/day
               </p>
               <div className="d-flex justify-content-between flex-row reserve-amount">
                 <button className="rmv-btn" onClick={this.props.rmvReserve}>

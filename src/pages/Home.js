@@ -14,25 +14,29 @@ class Home extends Component {
         id: 1,
         title: "Merapi",
         subtitle: "Yogyakarta",
-        picture: "popular-1",
+        picture:
+          "https://user-images.githubusercontent.com/38064315/131137975-51a002b9-8f65-4fe4-8e2d-fb2a45fba6fb.jpg",
       },
       {
         id: 2,
         title: "Teluk Bogam",
         subtitle: "Kalimantan",
-        picture: "popular-2",
+        picture:
+          "https://user-images.githubusercontent.com/38064315/131139093-ca590c9e-3afc-49d5-bd58-7c933ad17537.jpg",
       },
       {
         id: 3,
         title: "Bromo",
         subtitle: "Malang",
-        picture: "popular-3",
+        picture:
+          "https://user-images.githubusercontent.com/38064315/131139411-5481f5a4-c4a7-4b41-bc32-150c509531d0.jpg",
       },
       {
         id: 4,
         title: "Malioboro",
         subtitle: "Yogyakarta",
-        picture: "popular-4",
+        picture:
+          "https://user-images.githubusercontent.com/38064315/131139519-56fdc2f3-661a-4df3-ac29-144f3e1852ca.jpg",
       },
     ],
   };
@@ -117,7 +121,7 @@ class Home extends Component {
                   <Card
                     key={data.id}
                     link={`/detail/${data.id}`}
-                    item={data.picture}
+                    picture={data.picture}
                     title={data.title}
                     subtitle={data.subtitle}
                   />
