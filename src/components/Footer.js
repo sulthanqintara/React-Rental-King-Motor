@@ -35,94 +35,96 @@ function Footer() {
             </p>
             <p>©2020 Vehicle Rental Center. All rights reserved</p>
           </div>
-          <div className="bd-highlight footer-column">
-            <p className="fw-bold mb-3">Destinations</p>
-            <p>
-              <a className="footer-text" href="link">
-                Bali
-              </a>
-            </p>
-            <p>
-              <a className="footer-text" href="link">
-                Yogyakarta
-              </a>
-            </p>
-            <p>
-              <a className="footer-text" href="link">
-                Jakarta
-              </a>
-            </p>
-            <p>
-              <a className="footer-text" href="link">
-                Kalimantan
-              </a>
-            </p>
-            <p>
-              <a className="footer-text" href="link">
-                Malang
-              </a>
-            </p>
-          </div>
-          <div className="bd-highlight footer-column">
-            <p className="fw-bold mb-3">Vehicles</p>
-            <p>
-              <a className="footer-text" href="link">
-                Bike
-              </a>
-            </p>
-            <p>
-              <a className="footer-text" href="link">
-                Cars
-              </a>
-            </p>
-            <p>
-              <a className="footer-text" href="link">
-                Motorbike
-              </a>
-            </p>
-            <p>
-              <a className="footer-text" href="link">
-                Return Times
-              </a>
-            </p>
-            <p>
-              <a className="footer-text" href="link">
-                FAQs
-              </a>
-            </p>
-          </div>
-          <div className="bd-highlight footer-column">
-            <p className="fw-bold mb-3">Interests</p>
-            <p>
-              <a className="footer-text" href="link">
-                Adventure
-              </a>
-            </p>
-            <p>
-              <a className="footer-text" href="link">
-                Travel
-              </a>
-            </p>
-            <p>
-              <a className="footer-text" href="link">
-                Art and Culture
-              </a>
-            </p>
-            <p>
-              <a className="footer-text" href="link">
-                Wildlife and Nature
-              </a>
-            </p>
-            <p>
-              <a className="footer-text" href="link">
-                Family Holidays
-              </a>
-            </p>
-            <p>
-              <a className="footer-text" href="link">
-                Culinary Trip
-              </a>
-            </p>
+          <div className="d-flex justify-content-between">
+            <div className="bd-highlight footer-column">
+              <p className="fw-bold mb-3">Destinations</p>
+              <p>
+                <a className="footer-text" href="link">
+                  Bali
+                </a>
+              </p>
+              <p>
+                <a className="footer-text" href="link">
+                  Yogyakarta
+                </a>
+              </p>
+              <p>
+                <a className="footer-text" href="link">
+                  Jakarta
+                </a>
+              </p>
+              <p>
+                <a className="footer-text" href="link">
+                  Kalimantan
+                </a>
+              </p>
+              <p>
+                <a className="footer-text" href="link">
+                  Malang
+                </a>
+              </p>
+            </div>
+            <div className="bd-highlight footer-column footer-column-margin">
+              <p className="fw-bold mb-3">Vehicles</p>
+              <p>
+                <a className="footer-text" href="link">
+                  Bike
+                </a>
+              </p>
+              <p>
+                <a className="footer-text" href="link">
+                  Cars
+                </a>
+              </p>
+              <p>
+                <a className="footer-text" href="link">
+                  Motorbike
+                </a>
+              </p>
+              <p>
+                <a className="footer-text" href="link">
+                  Return Times
+                </a>
+              </p>
+              <p>
+                <a className="footer-text" href="link">
+                  FAQs
+                </a>
+              </p>
+            </div>
+            <div className="bd-highlight footer-column">
+              <p className="fw-bold mb-3">Interests</p>
+              <p>
+                <a className="footer-text" href="link">
+                  Adventure
+                </a>
+              </p>
+              <p>
+                <a className="footer-text" href="link">
+                  Travel
+                </a>
+              </p>
+              <p>
+                <a className="footer-text" href="link">
+                  Art and Culture
+                </a>
+              </p>
+              <p>
+                <a className="footer-text" href="link">
+                  Wildlife and Nature
+                </a>
+              </p>
+              <p>
+                <a className="footer-text" href="link">
+                  Family Holidays
+                </a>
+              </p>
+              <p>
+                <a className="footer-text" href="link">
+                  Culinary Trip
+                </a>
+              </p>
+            </div>
           </div>
         </div>
         <div className="footer-line"></div>

@@ -11,7 +11,7 @@ class Payment extends Component {
         <Header />
         <main className="reserve-container">
           <div className="reservation-title">
-            <Link to="/">
+            <Link to="/vehicles">
               <img src={backIcon} alt="" />
             </Link>
             <span>Payment</span>

@@ -4,15 +4,64 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import backIcon from "../assets/img/icon/arrow-left.png";
+import Axios from "axios";
+import CounterButton from "../components/CounterButton";
 
 class Reservation extends Component {
+  state = {
+    picture: "",
+    reserved: 1,
+  };
+
+  addReserve = () => {
+    if (this.state.reserved <= this.state.amount_available)
+      this.setState((prevState) => {
+        return {
+          reserved: prevState.reserved + 1,
+        };
+      });
+  };
+
+  removeReserve = () => {
+    this.setState((prevState) => {
+      if (this.state.reserved > 1) {
+        return {
+          reserved: prevState.reserved - 1,
+        };
+      }
+    });
+  };
+
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    const url = "http://localhost:8000/vehicles";
+    Axios.get(url, {
+      params: { id: String(id) },
+    })
+      .then(({ data }) => {
+        const arrayResult = data.result[0];
+        this.setState({
+          amount_available: arrayResult.amount_available,
+          category: arrayResult.category,
+          id: arrayResult.id,
+          location: arrayResult.location,
+          model: arrayResult.model,
+          picture: arrayResult.picture,
+          price: arrayResult.price,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   render() {
+    const pic = this.state.picture;
     return (
       <>
         <Header />
         <main className="reserve-container">
           <div className="reservation-title">
-            <Link to="/">
+            <Link to="/vehicles">
               <img src={backIcon} alt="" />
             </Link>
             <span>Reservation</span>
@@ -26,24 +75,28 @@ class Reservation extends Component {
           reserve-detail
         "
           >
-            <div className="reserve-pic-container">
-              <div className="reserve-pic"></div>
+            <div className="d-flex justify-content-center">
+              <img
+                className="more-detail-big-pic"
+                alt=""
+                src={pic.split(",")[0]}
+              />
             </div>
             <div className="flex-grow-1 product-reserve">
               <p className="reserve-vehicle-name">
-                Fixie - Gray Only <br />
-                <span>Yogyakarta</span>
+                {this.state.model} <br />
+                <span>{this.state.location}</span>
               </p>
               <p className="no-prepayment">No Prepayment</p>
-              <div className="d-flex justify-content-between flex-row reserve-amount">
-                <button className="rmv-btn" onClick={this.props.rmvReserve}>
-                  -
-                </button>
-                <div className="amount-added">{this.props.reservedState}</div>
-                <button className="add-btn" onClick={this.props.addReserve}>
-                  +
-                </button>
-              </div>
+              {this.state.amount_available > 0 ? (
+                <CounterButton
+                  onClickRemove={this.removeReserve}
+                  onClickAdd={this.addReserve}
+                  value={this.state.reserved}
+                />
+              ) : (
+                <CounterButton value={"0"} disabled />
+              )}
               <p className="reserve-date-title">Reservation Date :</p>
               <div>
                 <input
@@ -65,7 +118,7 @@ class Reservation extends Component {
           </section>
           <Link to="/payment">
             <button className="btn-pay">
-              Pay now : Rp. {this.props.reservedState * 64000}
+              Pay now : Rp. {this.state.reserved * this.state.price}
             </button>
           </Link>
         </main>

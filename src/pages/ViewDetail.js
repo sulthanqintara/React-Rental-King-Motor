@@ -5,33 +5,47 @@ import Header from "../components/Header";
 import backIcon from "../assets/img/icon/arrow-left.png";
 import likeIcon from "../assets/img/icon/like-icon.png";
 import Axios from "axios";
+import CounterButton from "../components/CounterButton";
 
 class ViewDetail extends Component {
   state = {
-    amount_available: 0,
-    category: "",
-    id: 0,
-    location: "",
-    model: "",
     picture: "",
-    price: 0,
+    reserved: 1,
+  };
+
+  addReserve = () => {
+    if (this.state.reserved <= this.state.amount_available)
+      this.setState((prevState) => {
+        return {
+          reserved: prevState.reserved + 1,
+        };
+      });
+  };
+  removeReserve = () => {
+    this.setState((prevState) => {
+      if (this.state.reserved > 1) {
+        return {
+          reserved: prevState.reserved - 1,
+        };
+      }
+    });
   };
   componentDidMount() {
-    const idParams = this.props.match.params.id;
+    const { id } = this.props.match.params;
     const url = "http://localhost:8000/vehicles";
     Axios.get(url, {
-      params: { id: String(idParams) },
+      params: { id: String(id) },
     })
       .then(({ data }) => {
-        console.log(data.result);
+        const arrayResult = data.result[0];
         this.setState({
-          amount_available: data.result[0].amount_available,
-          category: data.result[0].category,
-          id: data.result[0].id,
-          location: data.result[0].location,
-          model: data.result[0].model,
-          picture: data.result[0].picture,
-          price: data.result[0].price,
+          amount_available: arrayResult.amount_available,
+          category: arrayResult.category,
+          id: arrayResult.id,
+          location: arrayResult.location,
+          model: arrayResult.model,
+          picture: arrayResult.picture,
+          price: arrayResult.price,
         });
       })
       .catch((err) => {
@@ -45,7 +59,7 @@ class ViewDetail extends Component {
         <Header />
         <main className="reserve-container">
           <div className="reservation-title">
-            <Link to="/">
+            <Link to="/vehicles">
               <img src={backIcon} alt="" />
             </Link>
             <span>Detail</span>
@@ -93,11 +107,17 @@ class ViewDetail extends Component {
             </div>
             <div className="product-reserve more-detail-container ">
               <p className="reserve-vehicle-name">
-                Fixie - Gray Only <br />
-                <span>Yogyakarta</span>
+                {this.state.model} <br />
+                <span>{this.state.location}</span>
               </p>
-              <p className="available-color">Available</p>
-              <p className="no-prepayment">No Prepayment</p>
+              <p
+                className="available-color"
+                style={this.state.amount_available > 0 ? {} : { color: "red" }}
+              >
+                {this.state.amount_available > 0
+                  ? "Available"
+                  : "Not Available"}
+              </p>
               <p className="detail-text">
                 Capacity: 1 person
                 <br />
@@ -105,25 +125,34 @@ class ViewDetail extends Component {
                 <br /> Reservation before 2 PM
               </p>
               <p className="reserve-vehicle-name d-flex justify-content-end">
-                Rp. {this.props.reservedState * this.state.price}/day
+                Rp. {this.state.reserved * this.state.price}/day
               </p>
-              <div className="d-flex justify-content-between flex-row reserve-amount">
-                <button className="rmv-btn" onClick={this.props.rmvReserve}>
-                  -
-                </button>
-                <div className="amount-added">{this.props.reservedState}</div>
-                <button className="add-btn" onClick={this.props.addReserve}>
-                  +
-                </button>
-              </div>
+              {this.state.amount_available > 0 ? (
+                <CounterButton
+                  onClickRemove={this.removeReserve}
+                  onClickAdd={this.addReserve}
+                  value={this.state.reserved}
+                />
+              ) : (
+                <CounterButton value={"0"} disabled />
+              )}
             </div>
           </section>
           <section className="detail-btn-container d-lg-flex flex-lg-row justify-content-center">
             <Link to="/chat" className="chat-admin mt-2 px-3">
               <button className="chat-admin">Chat Admin</button>
             </Link>
-            <Link to="/reservation" className="reserve-from-detail mt-2 px-3">
-              <button className="reserve-from-detail">Reservation</button>
+            <Link
+              to={`/reservation/${this.props.match.params.id}`}
+              className="reserve-from-detail mt-2 px-3"
+            >
+              {this.state.amount_available > 0 ? (
+                <button className="reserve-from-detail">Reservation</button>
+              ) : (
+                <button disabled className="reserve-from-detail">
+                  Reservation
+                </button>
+              )}
             </Link>
             <Link to="/reservation" className="like-btn mt-2 px-3">
               <button className="like-btn">

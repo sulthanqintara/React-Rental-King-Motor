@@ -778,10 +778,10 @@ input.reserve-date[type="date"],
 }
 
 /******* ========== VEHICLE ========== *******/
-main.vehicle-types-container {
+main.vehicles-container {
   padding: 69px 6%;
 }
-input#vehicleName {
+.search-form {
   background: rgba(255, 255, 255, 0.26);
   width: 100%;
   height: 79px;
@@ -792,7 +792,7 @@ input#vehicleName {
   border-radius: 4px;
   box-sizing: border-box;
 }
-input#vehicleName::placeholder {
+.search-from::placeholder {
   color: #b8becd;
   font-weight: 400;
 }
@@ -806,8 +806,8 @@ input#vehicleName::placeholder {
   flex: 2;
 }
 .more-detail-big-pic {
-  width: 50vw;
-  height: 100%;
+  width: 45vw;
+  height: 35vw;
   border-radius: 10px;
   object-fit: cover;
 }
@@ -1059,13 +1059,13 @@ select.payment-methods {
 .history-checkbox {
   flex: 1;
 }
-.search-form > input {
+.search-form-history {
   border: 0.5px solid #c4c4c4;
   box-sizing: border-box;
   border-radius: 10px;
   width: 100%;
   font-size: 18px;
-  padding: 0.75rem 41px;
+  padding: 0.75rem;
   background: rgba(218, 218, 218, 0.27);
 }
 .history-checkbox > form-check-input {
@@ -1079,7 +1079,7 @@ select.payment-methods {
   box-sizing: border-box;
   border-radius: 10px;
   font-size: 18px;
-  padding: 0.75rem 41px;
+  padding: 0.75rem;
   background: rgba(218, 218, 218, 0.27);
 }
 .filter > select > option {
@@ -1224,8 +1224,29 @@ footer {
     flex-direction: row !important;
   }
   .more-detail-big-pic {
-    width: 55vw;
-    height: 100%;
+    width: 35vw;
+    height: 35vw;
+  }
+  .more-detail-small-pic {
+    width: 117px;
+    height: 79px;
+    margin: 0 0.5rem !important;
+  }
+  .footer-flex {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .footer-flex > div {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .footer-column {
+    padding: 0px;
+  }
+  .footer-column-margin {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
   }
 }
 
@@ -1302,14 +1323,6 @@ footer {
 }
 
 @media only screen and (max-width: 768px) {
-  .footer-flex {
-    flex-direction: column;
-    align-items: center;
-  }
-  .footer-column {
-    text-align: center;
-    padding: 0px;
-  }
   .width-dropdown {
     display: grid;
     width: 100%;
@@ -1436,11 +1449,7 @@ footer {
   .payment-code {
     width: 95%;
   }
-  .more-detail-small-pic {
-    width: 117px;
-    height: 79px;
-    margin: 0 0.5rem !important;
-  }
+
   .slide-image > button {
     margin: 0 !important;
   }
@@ -1455,8 +1464,8 @@ footer {
     width: 75%;
   }
   .more-detail-big-pic {
-    width: 85vw;
-    height: 100%;
+    width: 65vw;
+    height: 65vw;
   }
 }
 
@@ -1598,9 +1607,13 @@ footer {
     flex-direction: column;
   }
   .filter > select {
-    padding: 0.5rem;
+    width: 65%;
   }
   .search-form > input {
     padding: 0.5rem;
+  }
+  .more-detail-big-pic {
+    width: 75vw;
+    height: 75vw;
   }
 }

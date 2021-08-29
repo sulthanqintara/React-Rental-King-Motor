@@ -9,7 +9,6 @@ class Header extends Component {
     localStorage.setItem("token", "");
     this.props.history.push("/");
   };
-
   render() {
     // const status = this.props.isLogin;
     const token = localStorage.getItem("token");
@@ -17,7 +16,11 @@ class Header extends Component {
       <>
         <header>
           <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="/">
+            <Navbar.Brand
+              onClick={() => {
+                this.props.history.push("/");
+              }}
+            >
               <svg height="3em" width="3em">
                 <circle
                   cx="1.5em"
@@ -43,14 +46,18 @@ class Header extends Component {
                 <Link className="active" to="/">
                   Home
                 </Link>
-                <Link to="/vehicle-type">Vehicle Types</Link>
+                <Link to="/vehicles">Vehicle Types</Link>
                 <Link to="/history">History</Link>
                 <Link to="/about">About</Link>
                 {token ? (
                   <div className="mail-btn mx-3">
                     <div className="mail-notif">1</div>
                     <NavDropdown className="mail-dropdown" title="" id="">
-                      <NavDropdown.Item href="/chat">
+                      <NavDropdown.Item
+                        onClick={() => {
+                          this.props.history.push("/chat");
+                        }}
+                      >
                         <div className="d-flex justify-content-between pb-2">
                           <div className="fw-bold">User 1</div>
                           <div className="ps-5">Just now</div>
@@ -60,7 +67,11 @@ class Header extends Component {
                         </div>
                       </NavDropdown.Item>
                       <NavDropdown.Divider />
-                      <NavDropdown.Item href="/chat">
+                      <NavDropdown.Item
+                        onClick={() => {
+                          this.props.history.push("/chat");
+                        }}
+                      >
                         <div className="d-flex justify-content-between pb-2">
                           <div className="fw-bold">User 2</div>
                           <div className="ps-5">Yesterday</div>
@@ -70,7 +81,11 @@ class Header extends Component {
                         </div>
                       </NavDropdown.Item>
                       <NavDropdown.Divider />
-                      <NavDropdown.Item href="/chat">
+                      <NavDropdown.Item
+                        onClick={() => {
+                          this.props.history.push("/chat");
+                        }}
+                      >
                         <div className="d-flex justify-content-between pb-2">
                           <div className="fw-bold">User 1</div>
                           <div className="ps-5">Yesterday</div>
@@ -80,7 +95,11 @@ class Header extends Component {
                         </div>
                       </NavDropdown.Item>
                       <NavDropdown.Divider />
-                      <NavDropdown.Item href="/chat">
+                      <NavDropdown.Item
+                        onClick={() => {
+                          this.props.history.push("/chat");
+                        }}
+                      >
                         <div className="d-flex justify-content-between pb-2">
                           <div className="fw-bold">User 2</div>
                           <div className="ps-5">Yesterday</div>

@@ -7,7 +7,7 @@ import ForgotPassword from "../pages/ForgotPassword";
 import Profile from "../pages/Profile";
 import Reservation from "../pages/Reservation";
 import Register from "./SignUp";
-import vehicleType from "./Vehicle-type";
+import Vehicles from "./Vehicles";
 import ViewDetail from "./ViewDetail";
 import Payment from "./Payment";
 import ChatDetail from "./ChatDetail";
@@ -15,24 +15,7 @@ import History from "./History";
 
 class AppWithRouter extends Component {
   state = {
-    reserved: 1,
     isLogin: false,
-  };
-  addReserve = () => {
-    this.setState((prevState) => {
-      return {
-        reserved: prevState.reserved + 1,
-      };
-    });
-  };
-  rmvReserve = () => {
-    this.setState((prevState) => {
-      if (this.state.reserved > 1) {
-        return {
-          reserved: prevState.reserved - 1,
-        };
-      }
-    });
   };
   componentDidMount() {
     const data = localStorage.getItem("token");
@@ -48,7 +31,6 @@ class AppWithRouter extends Component {
         <Route
           path="/auth"
           render={() => {
-            console.log(this.state.isLogin);
             if (!this.state.isLogin) {
               return <Login />;
             } else {
@@ -59,7 +41,6 @@ class AppWithRouter extends Component {
         <Route
           path="/register"
           render={() => {
-            console.log(this.state.isLogin);
             if (!this.state.isLogin) {
               return <Register />;
             } else {
@@ -80,7 +61,6 @@ class AppWithRouter extends Component {
         <Route
           path="/profile"
           render={() => {
-            console.log(this.state.isLogin);
             if (this.state.isLogin) {
               return <Profile />;
             } else {
@@ -88,15 +68,14 @@ class AppWithRouter extends Component {
             }
           }}
         />
+        <Route path="/vehicles" render={(props) => <Vehicles {...props} />} />
         <Route
-          path="/reservation"
-          render={() => {
+          path="/reservation/:id"
+          render={(props) => {
             if (this.state.isLogin) {
               return (
                 <Reservation
-                  addReserve={this.addReserve}
-                  rmvReserve={this.rmvReserve}
-                  reservedState={this.state.reserved}
+                  {...props} //spread operator
                 />
               );
             } else {
@@ -104,17 +83,9 @@ class AppWithRouter extends Component {
             }
           }}
         />
-        <Route path="/vehicle-type" component={vehicleType} />
         <Route
           path="/detail/:id"
-          render={(props) => (
-            <ViewDetail
-              addReserve={this.addReserve}
-              rmvReserve={this.rmvReserve}
-              reservedState={this.state.reserved}
-              {...props}
-            />
-          )}
+          render={(props) => <ViewDetail {...props} />}
         />
         <Route
           path="/payment"
@@ -129,7 +100,7 @@ class AppWithRouter extends Component {
         <Route
           path="/chat"
           render={() => {
-            if (this.state.token !== "") {
+            if (this.state.isLogin) {
               return <ChatDetail />;
             } else {
               return <Redirect to="/auth" />;

@@ -6,40 +6,23 @@ import Footer from "../components/Footer";
 import star from "../assets/img/icon/Vectorstar.png";
 import plusVector from "../assets/img/icon/vector-plus.png";
 import Card from "../components/Cards";
+import Axios from "axios";
 
 class Home extends Component {
   state = {
-    popular: [
-      {
-        id: 1,
-        title: "Merapi",
-        subtitle: "Yogyakarta",
-        picture:
-          "https://user-images.githubusercontent.com/38064315/131137975-51a002b9-8f65-4fe4-8e2d-fb2a45fba6fb.jpg",
-      },
-      {
-        id: 2,
-        title: "Teluk Bogam",
-        subtitle: "Kalimantan",
-        picture:
-          "https://user-images.githubusercontent.com/38064315/131139093-ca590c9e-3afc-49d5-bd58-7c933ad17537.jpg",
-      },
-      {
-        id: 3,
-        title: "Bromo",
-        subtitle: "Malang",
-        picture:
-          "https://user-images.githubusercontent.com/38064315/131139411-5481f5a4-c4a7-4b41-bc32-150c509531d0.jpg",
-      },
-      {
-        id: 4,
-        title: "Malioboro",
-        subtitle: "Yogyakarta",
-        picture:
-          "https://user-images.githubusercontent.com/38064315/131139519-56fdc2f3-661a-4df3-ac29-144f3e1852ca.jpg",
-      },
-    ],
+    popular: [],
   };
+  componentDidMount() {
+    Axios.get("http://localhost:8000/vehicles", {
+      params: { order_by: "v.popular_stats", sort: "DESC" },
+    })
+      .then(({ data }) => {
+        this.setState({ popular: data.result });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   render() {
     const data = this.state.popular;
     return (
@@ -111,7 +94,7 @@ class Home extends Component {
           <section className="main-article">
             <div className="d-flex justify-content-between popular-title-container">
               <div className="popular-title">Popular in Town</div>
-              <Link to={"/vehicle-type"} className="text-view">
+              <Link to={"/vehicles"} className="text-view">
                 View all <span className="fw-bolder">&nbsp;&nbsp;&gt;</span>
               </Link>
             </div>
@@ -121,9 +104,9 @@ class Home extends Component {
                   <Card
                     key={data.id}
                     link={`/detail/${data.id}`}
-                    picture={data.picture}
-                    title={data.title}
-                    subtitle={data.subtitle}
+                    picture={data.picture.split(",")[0]}
+                    title={data.model}
+                    subtitle={data.location}
                   />
                 );
               })}

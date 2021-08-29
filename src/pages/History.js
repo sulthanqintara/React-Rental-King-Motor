@@ -54,12 +54,13 @@ export default class History extends Component {
         <main className="d-flex history-main">
           <div className="d-flex flex-column flex-fill">
             <div className="d-flex search-container">
-              <form className="search-form flex-grow-7">
+              <form className="flex-grow-7">
                 <input
                   type="text"
                   id="search"
                   placeholder="Search History"
                   autoComplete="off"
+                  className="search-form-history"
                 />
               </form>
               <div className="d-flex align-items-center flex-column history-checkbox">
@@ -75,7 +76,7 @@ export default class History extends Component {
               <select
                 defaultValue="default"
                 className="form-select"
-                aria-label=" select example"
+                aria-label="select"
               >
                 <option value="default" hidden disabled>
                   Filter
@@ -151,7 +152,7 @@ export default class History extends Component {
             </div>
             <div className="text-center mt-3">View more</div>
             <div className="d-flex justify-content-center">
-              <Link to="/vehicle-type" className="view-more-new-arrival">
+              <Link to="/vehicles" className="view-more-new-arrival">
                 <img alt="" className="view-more-new-arrival" src={arrow} />
               </Link>
             </div>
