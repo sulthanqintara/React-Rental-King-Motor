@@ -161,7 +161,7 @@ class Header extends Component {
                     }}
                   >
                     <button title="login" className="btn-register ">
-                      register
+                      Register
                     </button>
                   </Nav.Link>
                 )}

@@ -8,13 +8,13 @@ function ForgotPassword() {
     <>
       <main className="forgot-password-background">
         <div className="shadow-container px-5 py-5 ">
-          <a class="back-arrow" href="/auth">
+          <Link to="/auth" className="back-arrow">
             <span>Back</span>
-          </a>
-          <div class="main-content text-center">
-            <div class="forgot-title">Don’t worry, we got your back!</div>
+          </Link>
+          <div className="main-content text-center">
+            <div className="forgot-title">Don’t worry, we got your back!</div>
           </div>
-          <div class="d-flex justify-content-center email-forgot">
+          <div className="d-flex justify-content-center email-forgot">
             <input
               type="text"
               id="email"
@@ -22,18 +22,18 @@ function ForgotPassword() {
               placeholder="Enter your email adress"
             />
           </div>
-          <div class="d-flex justify-content-center send-link">
+          <div className="d-flex justify-content-center send-link">
             <Link to="/">
-              <button class="btn-login-page mt-5">Send Link</button>
+              <button className="btn-login-page mt-5">Send Link</button>
             </Link>
           </div>
-          <div class="resend-link text-center">
+          <div className="resend-link text-center">
             You will receive a link to reset your password. <br />
             If you haven’t received any link, click&nbsp;
             <span>
-              <a class="resend-link-url" href="/">
+              <Link to="/" className="resend-link-url">
                 Resend Link
-              </a>
+              </Link>
             </span>
           </div>
         </div>
