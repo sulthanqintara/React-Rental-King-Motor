@@ -112,7 +112,11 @@ class Header extends Component {
                     </NavDropdown>
                   </div>
                 ) : (
-                  <Nav.Link href="/auth">
+                  <Nav.Link
+                    onClick={() => {
+                      this.props.history.push("/auth");
+                    }}
+                  >
                     <button title="login" className="btn-login ">
                       Login
                     </button>
@@ -151,7 +155,11 @@ class Header extends Component {
                     <NavDropdown.Divider />
                   </NavDropdown>
                 ) : (
-                  <Nav.Link href="/auth">
+                  <Nav.Link
+                    onClick={() => {
+                      this.props.history.push("/register");
+                    }}
+                  >
                     <button title="login" className="btn-register ">
                       register
                     </button>
