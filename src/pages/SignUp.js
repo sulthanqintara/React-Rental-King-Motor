@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
+import googleIcon from "../assets/img/icon/google-icon.png";
 
 import Footer from "../components/Footer";
 
@@ -97,10 +98,7 @@ function Register() {
             <div>
               <Link to="/">
                 <button className="btn-login-with-google">
-                  <img
-                    src="https://s3-alpha-sig.figma.com/img/b8ac/5ee0/9188114fc23c443fbf14c61b1d4c791f?Expires=1630281600&Signature=dbCH2CrqJ6XU7PGbJkDWv5xdaQpFWaLvB2U6N29io0O8lNol~QJL-zIU1jYBQ7hu6Hly5ztkegEhtQbrl6YVseFpbkZEuSXxJ7k8ZCDz9TK7XcjQ9hz-g10-HCYzoX9FUj7SAZLUTYIpBU3YzOnZLxk3NcalmJjzj3RQCH--OV0cjxpHRCh8gzE~UX2j7EnQDfUCno6flCUHHFyMfPmdYVfBA0REUxn5fJ7azyicfv03fUl4FpOdMhu8WKJK7Cw12JmnO258H3J6blZcftERmnu2GjGYOzEzvrm31QF0Nl4c0wPN14iL~LrbIYJ226AVFIxkDlKieVlbbfxoyh7JQg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
-                    alt=""
-                  />
+                  <img src={googleIcon} alt="" />
                   Sign Up With Google
                 </button>
               </Link>
