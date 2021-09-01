@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import backIcon from "../assets/img/icon/arrow-left.png";
@@ -12,7 +12,6 @@ class ViewDetail extends Component {
     picture: "",
     reserved: 1,
   };
-
   addReserve = () => {
     if (this.state.reserved <= this.state.amount_available)
       this.setState((prevState) => {
@@ -167,4 +166,4 @@ class ViewDetail extends Component {
   }
 }
 
-export default ViewDetail;
+export default withRouter(ViewDetail);

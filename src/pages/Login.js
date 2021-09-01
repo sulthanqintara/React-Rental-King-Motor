@@ -9,16 +9,36 @@ class Login extends Component {
   state = {
     email: "",
     password: "",
+    showMessage: false,
+    errorMessage: "",
   };
-
   render() {
     const email = this.state.email;
     const password = this.state.password;
     const submitHandler = () => {
+      if (email.length < 1)
+        return this.setState({
+          showMessage: true,
+          errorMessage: "Email is Required",
+        });
+      if (!email.includes("@"))
+        return this.setState({
+          showMessage: true,
+          errorMessage: "Please input a Valid Email",
+        });
+      if (password.length < 1)
+        return this.setState({
+          showMessage: true,
+          errorMessage: "Password is Required",
+        });
+      if (password.length < 6)
+        return this.setState({
+          showMessage: true,
+          errorMessage: "Password must have 6 or more characters!",
+        });
       const form = new URLSearchParams();
       form.append("email", email);
       form.append("password", password);
-      console.log(form);
       axios
         .post(`http://localhost:8000/auth/login`, form)
         .then((res) => {
@@ -35,7 +55,6 @@ class Login extends Component {
           } else {
             console.log("Error", error.message);
           }
-          // console.log(error.config);
         });
     };
     return (
@@ -82,7 +101,11 @@ class Login extends Component {
                   autoComplete="current-password"
                 />
               </form>
-
+              {this.state.showMessage && (
+                <div className="my-3 bg-white p-2 rounded fw-bold fs-5 text-center text-danger">
+                  {this.state.errorMessage}
+                </div>
+              )}
               <div className="forgot-password">
                 <Link to="/forgot">Forgot Password?</Link>
               </div>

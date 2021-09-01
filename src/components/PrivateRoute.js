@@ -1,20 +1,25 @@
-// import { Children } from "react";
+import { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 
-function PrivateRoute(children, ...rest) {
-  const token = localStorage.getItem("token");
+export function PrivateRoute({ children, ...rest }) {
+  const [token, setToken] = useState("");
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
   return (
     <Route
-      render={() => {
-        if (!token) {
-          return children;
-        } else {
-          return <Redirect to={"/auth"} />;
-        }
-      }}
       {...rest}
+      render={() => (token ? children : <Redirect to="/auth" />)}
     />
   );
 }
 
-export default PrivateRoute;
+export function AuthRoute({ children, ...rest }) {
+  const [token, setToken] = useState("");
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
+  return (
+    <Route {...rest} render={() => (token ? <Redirect to="/" /> : children)} />
+  );
+}

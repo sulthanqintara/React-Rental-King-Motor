@@ -7,7 +7,7 @@ import { Link, withRouter } from "react-router-dom";
 class Header extends Component {
   isLogout = () => {
     localStorage.setItem("token", "");
-    this.props.history.push("/");
+    this.props.history.push("/auth");
   };
   render() {
     // const status = this.props.isLogin;
