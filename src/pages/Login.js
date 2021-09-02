@@ -1,6 +1,8 @@
-import axios from "axios";
 import { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+// import { postLogin } from "../utils/https/Auth";
+import { connect } from "react-redux";
+import { loginAction } from "../redux/actionCreators/auth";
 
 import Footer from "../components/Footer";
 import googleIcon from "../assets/img/icon/google-icon.png";
@@ -12,51 +14,48 @@ class Login extends Component {
     showMessage: false,
     errorMessage: "",
   };
-  render() {
+  submitHandler = () => {
     const email = this.state.email;
     const password = this.state.password;
-    const submitHandler = () => {
-      if (email.length < 1)
-        return this.setState({
-          showMessage: true,
-          errorMessage: "Email is Required",
-        });
-      if (!email.includes("@"))
-        return this.setState({
-          showMessage: true,
-          errorMessage: "Please input a Valid Email",
-        });
-      if (password.length < 1)
-        return this.setState({
-          showMessage: true,
-          errorMessage: "Password is Required",
-        });
-      if (password.length < 6)
-        return this.setState({
-          showMessage: true,
-          errorMessage: "Password must have 6 or more characters!",
-        });
-      const form = new URLSearchParams();
-      form.append("email", email);
-      form.append("password", password);
-      axios
-        .post(`http://localhost:8000/auth/login`, form)
-        .then((res) => {
-          localStorage.setItem("token", String(res.data.result.token));
-          this.props.history.push("/");
-        })
-        .catch((error) => {
-          if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
-          } else {
-            console.log("Error", error.message);
-          }
-        });
-    };
+    if (email.length < 1)
+      return this.setState({
+        showMessage: true,
+        errorMessage: "Email is Required",
+      });
+    if (!email.includes("@"))
+      return this.setState({
+        showMessage: true,
+        errorMessage: "Please input a Valid Email",
+      });
+    if (password.length < 1)
+      return this.setState({
+        showMessage: true,
+        errorMessage: "Password is Required",
+      });
+    if (password.length < 6)
+      return this.setState({
+        showMessage: true,
+        errorMessage: "Password must have 6 or more characters!",
+      });
+    if (this.props.auth.error) {
+      this.setState({
+        showMessage: true,
+        errorMessage: "Invalid E-mail or Password!",
+      });
+    }
+    const form = new URLSearchParams();
+    form.append("email", email);
+    form.append("password", password);
+    this.props.onLogin(form);
+  };
+  componentDidUpdate() {
+    if (this.props.auth.isLogin) {
+      console.log(this.props.auth.authInfo);
+      this.props.history.push("/");
+    }
+  }
+
+  render() {
     return (
       <>
         <main className="login-background">
@@ -110,7 +109,7 @@ class Login extends Component {
                 <Link to="/forgot">Forgot Password?</Link>
               </div>
               <div>
-                <button className="btn-login-page" onClick={submitHandler}>
+                <button className="btn-login-page" onClick={this.submitHandler}>
                   Login
                 </button>
               </div>
@@ -130,4 +129,17 @@ class Login extends Component {
     );
   }
 }
-export default withRouter(Login);
+const mapStateToProps = ({ auth }) => {
+  return {
+    auth,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLogin: (body) => {
+      dispatch(loginAction(body));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

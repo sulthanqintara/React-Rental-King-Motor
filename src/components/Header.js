@@ -3,14 +3,28 @@ import Nav from "react-bootstrap/Nav";
 import { Component } from "react";
 import { NavDropdown } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
+import { deleteLogout } from "../utils/https/Auth";
 
 class Header extends Component {
   isLogout = () => {
-    localStorage.setItem("token", "");
-    this.props.history.push("/auth");
+    deleteLogout()
+      .then((res) => {
+        localStorage.setItem("token", "");
+        this.props.history.push("/auth");
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log("Error", error.message);
+        }
+      });
   };
   render() {
-    // const status = this.props.isLogin;
     const token = localStorage.getItem("token");
     return (
       <>

@@ -2,32 +2,17 @@ import { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { connect } from "react-redux";
+
 import backIcon from "../assets/img/icon/arrow-left.png";
 import likeIcon from "../assets/img/icon/like-icon.png";
 import Axios from "axios";
 import CounterButton from "../components/CounterButton";
+import { countUpAction, countDownAction } from "../redux/actionCreators/count";
 
 class ViewDetail extends Component {
   state = {
     picture: "",
-    reserved: 1,
-  };
-  addReserve = () => {
-    if (this.state.reserved <= this.state.amount_available)
-      this.setState((prevState) => {
-        return {
-          reserved: prevState.reserved + 1,
-        };
-      });
-  };
-  removeReserve = () => {
-    this.setState((prevState) => {
-      if (this.state.reserved > 1) {
-        return {
-          reserved: prevState.reserved - 1,
-        };
-      }
-    });
   };
   componentDidMount() {
     const { id } = this.props.match.params;
@@ -39,7 +24,6 @@ class ViewDetail extends Component {
         const arrayResult = data.result[0];
         this.setState({
           amount_available: arrayResult.amount_available,
-          category: arrayResult.category,
           id: arrayResult.id,
           location: arrayResult.location,
           model: arrayResult.model,
@@ -51,8 +35,16 @@ class ViewDetail extends Component {
         console.log(err);
       });
   }
+  // onPlusHandler = () => {
+  //   // this.props.dispatch(countUpAction());
+  // };
+  // onMinusHandler = () => {
+  //   // this.props.dispatch(countDownAction());
+  // };
+
   render() {
     const pic = this.state.picture;
+    const { reduxState, countUp, countDown } = this.props;
     return (
       <>
         <Header />
@@ -124,13 +116,13 @@ class ViewDetail extends Component {
                 <br /> Reservation before 2 PM
               </p>
               <p className="reserve-vehicle-name d-flex justify-content-end">
-                Rp. {this.state.reserved * this.state.price}/day
+                Rp. {reduxState.count.number * this.state.price}/day
               </p>
               {this.state.amount_available > 0 ? (
                 <CounterButton
-                  onClickRemove={this.removeReserve}
-                  onClickAdd={this.addReserve}
-                  value={this.state.reserved}
+                  onClickRemove={countDown}
+                  onClickAdd={countUp}
+                  value={reduxState.count.number}
                 />
               ) : (
                 <CounterButton value={"0"} disabled />
@@ -145,7 +137,7 @@ class ViewDetail extends Component {
               to={`/reservation/${this.props.match.params.id}`}
               className="reserve-from-detail mt-2 px-3"
             >
-              {this.state.amount_available > 0 ? (
+              {reduxState.count.number > 0 ? (
                 <button className="reserve-from-detail">Reservation</button>
               ) : (
                 <button disabled className="reserve-from-detail">
@@ -165,5 +157,23 @@ class ViewDetail extends Component {
     );
   }
 }
+const mapStateToProps = (reduxState) => {
+  return {
+    reduxState,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    countUp: () => {
+      dispatch(countUpAction());
+    },
+    countDown: () => {
+      dispatch(countDownAction());
+    },
+  };
+};
 
-export default withRouter(ViewDetail);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(ViewDetail));

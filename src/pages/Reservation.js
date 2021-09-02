@@ -1,16 +1,24 @@
 import { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import backIcon from "../assets/img/icon/arrow-left.png";
 import Axios from "axios";
 import CounterButton from "../components/CounterButton";
+import { countDownAction, countUpAction } from "../redux/actionCreators/count";
 
 class Reservation extends Component {
   state = {
     picture: "",
     reserved: 1,
+  };
+  onMinusHandler = () => {
+    this.props.dispatch(countDownAction());
+  };
+  onPlusHandler = () => {
+    this.props.dispatch(countUpAction());
   };
 
   addReserve = () => {
@@ -56,6 +64,7 @@ class Reservation extends Component {
   }
   render() {
     const pic = this.state.picture;
+    const { reduxState, countUp, countDown } = this.props;
     return (
       <>
         <Header />
@@ -90,9 +99,9 @@ class Reservation extends Component {
               <p className="no-prepayment">No Prepayment</p>
               {this.state.amount_available > 0 ? (
                 <CounterButton
-                  onClickRemove={this.removeReserve}
-                  onClickAdd={this.addReserve}
-                  value={this.state.reserved}
+                  onClickRemove={countDown}
+                  onClickAdd={countUp}
+                  value={reduxState.count.number}
                 />
               ) : (
                 <CounterButton value={"0"} disabled />
@@ -118,7 +127,7 @@ class Reservation extends Component {
           </section>
           <Link to="/payment">
             <button className="btn-pay">
-              Pay now : Rp. {this.state.reserved * this.state.price}
+              Pay now : Rp. {reduxState.count.number * this.state.price}
             </button>
           </Link>
         </main>
@@ -127,5 +136,23 @@ class Reservation extends Component {
     );
   }
 }
+const mapStateToProps = (reduxState) => {
+  return {
+    reduxState,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    countUp: () => {
+      dispatch(countUpAction());
+    },
+    countDown: () => {
+      dispatch(countDownAction());
+    },
+  };
+};
 
-export default withRouter(Reservation);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Reservation));

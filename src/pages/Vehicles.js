@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -7,14 +7,17 @@ import Card from "../components/Cards";
 import Axios from "axios";
 
 class Vehicles extends Component {
-  state = {
-    data: [],
-    search: [],
-    popular: [],
-    cars: [],
-    motorcycle: [],
-    bike: [],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      search: [],
+      popular: [],
+      cars: [],
+      motorcycle: [],
+      bike: [],
+    };
+  }
   axiosGet = (query) => {
     Axios.get(`http://localhost:8000/vehicles${query}`)
       .then(({ data }) => {
@@ -204,4 +207,4 @@ class Vehicles extends Component {
   }
 }
 
-export default Vehicles;
+export default withRouter(Vehicles);

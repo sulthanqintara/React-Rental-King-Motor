@@ -1,9 +1,9 @@
-import axios from "axios";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import googleIcon from "../assets/img/icon/google-icon.png";
 
 import Footer from "../components/Footer";
+import { postRegister } from "../utils/https/Auth";
 
 function Register() {
   const history = useHistory();
@@ -36,9 +36,7 @@ function Register() {
       form.append("name", userName);
       form.append("email", email);
       form.append("password", password);
-      console.log(form);
-      axios
-        .post(`http://localhost:8000/auth/register`, form)
+      postRegister(form)
         .then((res) => history.push({ pathname: "/", status: true }))
         .catch((error) => {
           if (error.response) {
