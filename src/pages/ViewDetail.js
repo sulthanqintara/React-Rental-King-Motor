@@ -7,12 +7,12 @@ import { connect } from "react-redux";
 import backIcon from "../assets/img/icon/arrow-left.png";
 import likeIcon from "../assets/img/icon/like-icon.png";
 import Axios from "axios";
-import CounterButton from "../components/CounterButton";
 import { countUpAction, countDownAction } from "../redux/actionCreators/count";
 
 class ViewDetail extends Component {
   state = {
     picture: "",
+    amount_available: 0,
   };
   componentDidMount() {
     const { id } = this.props.match.params;
@@ -22,6 +22,7 @@ class ViewDetail extends Component {
     })
       .then(({ data }) => {
         const arrayResult = data.result[0];
+        console.log(arrayResult);
         this.setState({
           amount_available: arrayResult.amount_available,
           id: arrayResult.id,
@@ -29,22 +30,17 @@ class ViewDetail extends Component {
           model: arrayResult.model,
           picture: arrayResult.picture,
           price: arrayResult.price,
+          category: arrayResult.category,
         });
       })
       .catch((err) => {
         console.log(err);
       });
   }
-  // onPlusHandler = () => {
-  //   // this.props.dispatch(countUpAction());
-  // };
-  // onMinusHandler = () => {
-  //   // this.props.dispatch(countDownAction());
-  // };
 
   render() {
     const pic = this.state.picture;
-    const { reduxState, countUp, countDown } = this.props;
+    const { reduxState } = this.props;
     return (
       <>
         <Header />
@@ -110,47 +106,57 @@ class ViewDetail extends Component {
                   : "Not Available"}
               </p>
               <p className="detail-text">
-                Capacity: 1 person
-                <br />
-                Type: Bike
+                Type: {this.state.category}
                 <br /> Reservation before 2 PM
               </p>
               <p className="reserve-vehicle-name d-flex justify-content-end">
-                Rp. {reduxState.count.number * this.state.price}/day
+                Rp. {this.state.price}/day
               </p>
-              {this.state.amount_available > 0 ? (
-                <CounterButton
-                  onClickRemove={countDown}
-                  onClickAdd={countUp}
-                  value={reduxState.count.number}
-                />
-              ) : (
-                <CounterButton value={"0"} disabled />
-              )}
             </div>
           </section>
-          <section className="detail-btn-container d-lg-flex flex-lg-row justify-content-center">
-            <Link to="/chat" className="chat-admin mt-2 px-3">
-              <button className="chat-admin">Chat Admin</button>
-            </Link>
-            <Link
-              to={`/reservation/${this.props.match.params.id}`}
-              className="reserve-from-detail mt-2 px-3"
-            >
-              {reduxState.count.number > 0 ? (
-                <button className="reserve-from-detail">Reservation</button>
-              ) : (
-                <button disabled className="reserve-from-detail">
-                  Reservation
+          {reduxState.auth.authInfo.authLevel === 3 ? (
+            <section className="detail-btn-container d-lg-flex flex-lg-row justify-content-center">
+              <Link to="/chat" className="chat-admin mt-2 px-3">
+                <button className="chat-admin">Chat Admin</button>
+              </Link>
+              <Link
+                to={`/reservation/${this.props.match.params.id}`}
+                className="reserve-from-detail mt-2 px-3"
+              >
+                {this.state.amount_available > 0 ? (
+                  <button className="reserve-from-detail">Reservation</button>
+                ) : (
+                  <button disabled className="reserve-from-detail">
+                    Reservation
+                  </button>
+                )}
+              </Link>
+              <Link to="/reservation" className="like-btn mt-2 px-3">
+                <button className="like-btn">
+                  <img alt="" src={likeIcon}></img>Like
                 </button>
-              )}
-            </Link>
-            <Link to="/reservation" className="like-btn mt-2 px-3">
-              <button className="like-btn">
-                <img alt="" src={likeIcon}></img>Like
-              </button>
-            </Link>
-          </section>
+              </Link>
+            </section>
+          ) : (
+            <section className="detail-btn-container d-lg-flex flex-lg-row justify-content-center">
+              <Link to="/" className="chat-admin mt-2 px-3">
+                <button className="chat-admin">Add to Homepage</button>
+              </Link>
+              <Link
+                to={`/editvehicle/${this.state.id}`}
+                className="reserve-from-detail mt-2 px-3"
+              >
+                {reduxState.auth.authInfo.id === this.state.id ||
+                reduxState.auth.authInfo.authLevel === 1 ? (
+                  <button className="reserve-from-detail">Edit Vehicle</button>
+                ) : (
+                  <button disabled className="reserve-from-detail">
+                    Edit Vehicle
+                  </button>
+                )}
+              </Link>
+            </section>
+          )}
         </main>
         <Footer />
       </>

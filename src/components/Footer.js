@@ -10,7 +10,7 @@ function Footer() {
     <>
       <footer>
         <div className="d-flex bd-highlight mb-3 footer-flex">
-          <div className="flex-grow-1 bd-highlight footer-column px-0">
+          <div className="bd-highlight footer-column px-0">
             <svg height="3em" width="3em">
               <circle
                 cx="1.5em"
@@ -35,7 +35,7 @@ function Footer() {
             </p>
             <p>©2020 Vehicle Rental Center. All rights reserved</p>
           </div>
-          <div className="d-flex justify-content-between">
+          <div className="d-flex footer-column-2 justify-content-between">
             <div className="bd-highlight footer-column">
               <p className="fw-bold mb-3">Destinations</p>
               <p>

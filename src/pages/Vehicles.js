@@ -44,7 +44,7 @@ class Vehicles extends Component {
     const url = "http://localhost:8000/vehicles";
     const getPerType = (filter) => {
       Axios.get(url, {
-        params: { filter_by_type: filter },
+        params: { filter_by_type: filter, limit: "4" },
       })
         .then(({ data }) => {
           if (filter === 1) {
@@ -68,7 +68,7 @@ class Vehicles extends Component {
         });
     };
     Axios.get(url, {
-      params: { order_by: "v.popular_stats", sort: "DESC" },
+      params: { order_by: "v.popular_stats", sort: "DESC", limit: "4" },
     })
       .then(({ data }) => {
         this.setState({ popular: data.result });

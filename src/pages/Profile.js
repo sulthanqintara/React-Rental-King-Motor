@@ -1,10 +1,47 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { profileAction } from "../redux/actionCreators/profile";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+// import { patchProfile } from "../utils/https/Profile";
 
 class Profile extends React.Component {
+  state = {
+    email: "",
+    password: "",
+    gender: 0,
+    address: "",
+    phone: "",
+    userName: "",
+    dob: "",
+    files: "",
+  };
+  constructor(props) {
+    super(props);
+    this.myRef = React.createRef();
+  }
+  handleClick = (e) => {
+    this.setState({ files: this.myRef.current.click() });
+    console.log(this.state.files);
+  };
+  updateProfileHandler = () => {
+    const form = new FormData();
+    form.append("email", this.state.email);
+    this.state.files !== "" && form.append("profile_picture", this.state.files);
+    form.append("gender", this.state.gender);
+    form.append(
+      "address",
+      this.state.address || this.props.auth.authInfo.address
+    );
+    form.append("phone_number", this.state.phone);
+    form.append("name", this.state.userName);
+    form.append("DOB", this.state.dob);
+    console.log(this.props.auth.authInfo.user_id);
+    this.props.updateProfile(form, this.props.auth.authInfo.user_id);
+  };
+
   render() {
     return (
       <>
@@ -12,30 +49,56 @@ class Profile extends React.Component {
         <main className="profile-container">
           <p className="profile-title">Profile</p>
           <section className="text-center top-profile">
-            <div className="profile-photo profile-display">
-              <Link to="#">
-                <div className="edit-profile">
-                  <div className="edit-icon"></div>
-                </div>
-              </Link>
+            <div
+              className="profile-photo profile-display"
+              style={{
+                backgroundImage: `url(${this.props.auth.authInfo.profilePic})`,
+              }}
+            >
+              <button className="edit-profile" onClick={this.handleClick}>
+                <label className="edit-icon" />
+              </button>
+              <input
+                className="d-none"
+                ref={this.myRef}
+                type="file"
+                onChange={(value) =>
+                  this.setState({ files: value.target.files[0] })
+                }
+              />
             </div>
-            <p className="profile-name">Samantha Doe</p>
+            <p className="profile-name">{this.props.auth.authInfo.userName}</p>
             <p className="profile-desc">
-              samanthadoe@mail.com
-              <br />
-              +62833467823
-              <br />
-              Has been active since 2013
+              {this.props.auth.authInfo.email}
+              <br />+{this.props.auth.authInfo.phone}
             </p>
             <div className="gender">
               <label className="gender-container">
                 Male
-                <input type="radio" name="radio" />
+                <input
+                  type="radio"
+                  defaultChecked={
+                    this.props.auth.authInfo.gender === 1 ? "checked" : ""
+                  }
+                  name="radio"
+                  onClick={() => {
+                    this.setState({ gender: 1 });
+                  }}
+                />
                 <span className="checkmark"></span>
               </label>
               <label className="gender-container">
                 Female
-                <input type="radio" defaultChecked="checked" name="radio" />
+                <input
+                  type="radio"
+                  defaultChecked={
+                    this.props.auth.authInfo.gender === 0 ? "checked" : ""
+                  }
+                  name="radio"
+                  onClick={() => {
+                    this.setState({ gender: 0 });
+                  }}
+                />
                 <span className="checkmark"></span>
               </label>
             </div>
@@ -50,7 +113,8 @@ class Profile extends React.Component {
                 type="text"
                 id="email"
                 name="email"
-                placeholder="zulaikha17@gmail.com"
+                defaultValue={this.props.auth.authInfo.email}
+                onChange={(e) => this.setState({ email: e.target.value })}
               />
               <label className="profile-fields-subtitle" htmlFor="address">
                 Address:
@@ -59,16 +123,18 @@ class Profile extends React.Component {
                 type="text"
                 id="address"
                 name="address"
-                placeholder="Iskandar Street no. 67 Block A Near Bus Stop"
+                defaultValue={this.props.auth.authInfo.address}
+                onChange={(e) => this.setState({ address: e.target.value })}
               />
               <label className="profile-fields-subtitle" htmlFor="mobile-num">
                 Mobile Number:
               </label>
               <input
-                type="text"
+                type="number"
                 id="mobile-num"
                 name="mobile-num"
-                placeholder="(+62)813456782"
+                defaultValue={this.props.auth.authInfo.phone}
+                onChange={(e) => this.setState({ phone: e.target.value })}
               />
             </div>
             <div className="Identity">
@@ -82,7 +148,10 @@ class Profile extends React.Component {
                     type="text"
                     id="dname"
                     name="dname"
-                    placeholder="zulaikha"
+                    defaultValue={this.props.auth.authInfo.userName}
+                    onChange={(e) =>
+                      this.setState({ userName: e.target.value })
+                    }
                   />
                 </div>
                 <div className="flex-grow-1 identity-flex ms-md-5">
@@ -93,15 +162,24 @@ class Profile extends React.Component {
                     type="date"
                     id="DD/MM/YY"
                     name="DD/MM/YY"
-                    placeholder=""
+                    defaultValue={this.props.auth.authInfo.dob.split("T")[0]}
+                    onChange={(e) => {
+                      console.log(this.state.dob);
+                      this.setState({ dob: e.target.value });
+                    }}
                   />
                 </div>
               </div>
             </div>
             <div className="d-flex justify-content-between edit-profile-button mt-5">
               <div>
-                <Link to="/">
-                  <button className="btn-save-profile">Save Change</button>
+                <Link to="#">
+                  <button
+                    className="btn-save-profile"
+                    onClick={this.updateProfileHandler}
+                  >
+                    Save Change
+                  </button>
                 </Link>
               </div>
               <div>
@@ -117,10 +195,23 @@ class Profile extends React.Component {
             </div>
           </section>
         </main>
-        <Footer></Footer>
+        <Footer />
       </>
     );
   }
 }
 
-export default Profile;
+const mapStateToProps = ({ auth }) => {
+  return {
+    auth,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateProfile: (body, params) => {
+      dispatch(profileAction(body, params));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

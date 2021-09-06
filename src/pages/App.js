@@ -15,6 +15,8 @@ import ChatDetail from "./ChatDetail";
 import History from "./History";
 import { PrivateRoute, AuthRoute } from "../components/PrivateRoute";
 import reduxStore from "../redux/store";
+import AddVehicle from "./AddVehicle";
+import EditVehicle from "./EditVehicle";
 
 class AppWithRouter extends Component {
   state = {
@@ -28,9 +30,9 @@ class AppWithRouter extends Component {
           <Route path="/" exact>
             <Home />
           </Route>
-          <AuthRoute path="/auth">
+          <Route path="/auth">
             <Login />
-          </AuthRoute>
+          </Route>
           <AuthRoute path="/register">
             <Register />
           </AuthRoute>
@@ -58,6 +60,12 @@ class AppWithRouter extends Component {
           <PrivateRoute path="/history">
             <History />
           </PrivateRoute>
+          <Route path="/addvehicle">
+            <AddVehicle />
+          </Route>
+          <Route path="/editvehicle/:id">
+            <EditVehicle />
+          </Route>
         </Router>
       </Provider>
     );

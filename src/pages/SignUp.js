@@ -121,7 +121,7 @@ function Register() {
             </div>
             <div>
               <Link to="/">
-                <button className="btn-login-with-google">
+                <button className="btn-login-with-google" onClick={onSubmit}>
                   <img src={googleIcon} alt="" />
                   Sign Up With Google
                 </button>

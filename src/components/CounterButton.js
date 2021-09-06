@@ -7,7 +7,7 @@ export default function CounterButton({
   disabled,
 }) {
   return (
-    <div className="d-flex justify-content-between flex-row reserve-amount">
+    <div className="d-flex justify-content-between align-items-center flex-row reserve-amount">
       <button disabled={disabled} className="rmv-btn" onClick={onClickRemove}>
         -
       </button>

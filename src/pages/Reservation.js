@@ -96,16 +96,17 @@ class Reservation extends Component {
                 {this.state.model} <br />
                 <span>{this.state.location}</span>
               </p>
-              <p className="no-prepayment">No Prepayment</p>
-              {this.state.amount_available > 0 ? (
-                <CounterButton
-                  onClickRemove={countDown}
-                  onClickAdd={countUp}
-                  value={reduxState.count.number}
-                />
-              ) : (
-                <CounterButton value={"0"} disabled />
-              )}
+              <div className="my-5">
+                {this.state.amount_available > 0 ? (
+                  <CounterButton
+                    onClickRemove={countDown}
+                    onClickAdd={countUp}
+                    value={reduxState.count.number}
+                  />
+                ) : (
+                  <CounterButton value={"0"} disabled />
+                )}
+              </div>
               <p className="reserve-date-title">Reservation Date :</p>
               <div>
                 <input

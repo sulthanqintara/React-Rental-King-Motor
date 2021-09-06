@@ -2,7 +2,6 @@ import { countDown, countUp } from "../actionCreators/actionString";
 
 const defaultState = {
   number: 1,
-  isLogin: false,
 };
 
 const countReducer = (prevState = defaultState, action) => {

@@ -1,4 +1,4 @@
-import { signIn } from "../actionCreators/actionString";
+import { signedIn, signIn, signOut } from "../actionCreators/actionString";
 import { ActionType } from "redux-promise-middleware";
 
 const defaultState = {
@@ -20,7 +20,6 @@ const authReducer = (prevstate = defaultState, action) => {
         isFulfilled: false,
         isRejected: false,
       };
-
     case signIn.concat("_", Rejected):
       return {
         ...prevstate,
@@ -34,7 +33,6 @@ const authReducer = (prevstate = defaultState, action) => {
         "userInfo",
         JSON.stringify(action.payload.data.result.userInfo)
       );
-      console.log(JSON.parse(localStorage.getItem("userInfo")));
       return {
         ...prevstate,
         isPending: false,
@@ -42,7 +40,36 @@ const authReducer = (prevstate = defaultState, action) => {
         authInfo: action.payload.data.result,
         isLogin: true,
       };
-
+    case signedIn:
+      return {
+        ...prevstate,
+        authInfo: JSON.parse(localStorage.getItem("userInfo")),
+        isLogin: true,
+      };
+    case signOut.concat("_", Pending):
+      return {
+        ...prevstate,
+        isPending: true,
+        isFulfilled: false,
+        isRejected: false,
+      };
+    case signOut.concat("_", Rejected):
+      return {
+        ...prevstate,
+        isPending: false,
+        isRejected: true,
+        error: action.payload,
+      };
+    case signOut.concat("_", Fulfilled):
+      localStorage.removeItem("token");
+      localStorage.removeItem("userInfo");
+      return {
+        ...prevstate,
+        isPending: false,
+        isFulfilled: true,
+        authInfo: action.payload.data.result,
+        isLogin: false,
+      };
     default:
       return prevstate;
   }

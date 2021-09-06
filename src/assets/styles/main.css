@@ -96,11 +96,10 @@ button.reserve-from-detail:hover,
 }
 .profile-photo {
   background-position: 0% 30%;
-  background-image: url(/src/assets/img/profile-picture.png);
+  background-size: cover;
   background-repeat: no-repeat;
 }
 .profile-icon {
-  background-size: 100%;
   width: 55px;
   height: 55px;
   border-radius: 50%;
@@ -139,8 +138,28 @@ div.mail-dropdown > .dropdown-menu[data-bs-popper] {
 .navbar-nav > a.active {
   color: black;
 }
+.header-display-none {
+  display: none;
+}
+.confirm-logout {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.confirm-logout-box {
+  padding: 4vw 6vw;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  border: 1px solid black;
+}
 
 /******* ========== HOME ========== *******/
+.home-page > main > section {
+  padding: 2rem 6%;
+}
 .header-title {
   margin-right: auto;
 }
@@ -148,7 +167,6 @@ div.mail-dropdown > .dropdown-menu[data-bs-popper] {
   display: none;
 }
 .bg-hero {
-  padding: 69px 6%;
   height: 767px;
   width: 100%;
   background-position: center;
@@ -191,7 +209,7 @@ rect {
   display: grid;
   grid-template-areas:
     "location type"
-    "payment date";
+    "date payment";
   grid-gap: 35px;
 }
 .item1,
@@ -214,9 +232,6 @@ rect {
   height: 52px;
 }
 
-.main-article {
-  padding: 82px 6%;
-}
 .popular-title-container {
   padding-bottom: 60px;
 }
@@ -362,6 +377,14 @@ a.text-view {
 }
 .right-arrow {
   background-image: url(/src/assets/img/icon/Vector-right-arrow.png);
+}
+.add-vehicle-home {
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-right: 0.5rem;
+  font-size: 2rem;
+  font-weight: 900;
 }
 
 /******* ========== AUTH/LOGIN ========== *******/
@@ -537,7 +560,6 @@ a:active.resend-link-url {
   border-radius: 50%;
   margin: auto;
   width: 218px;
-  background-size: 100%;
 }
 .edit-profile {
   margin-top: 75%;
@@ -558,6 +580,8 @@ a:active.resend-link-url {
   width: 40%;
   height: 40%;
   background-repeat: no-repeat;
+  cursor: pointer;
+  border: none;
 }
 .profile-name {
   font-size: 48px;
@@ -647,7 +671,8 @@ p.profile-desc {
 }
 .profile-fields > div > input[type="text"],
 .identity-flex > input[type="text"],
-.identity-flex > input[type="date"] {
+.identity-flex > input[type="date"],
+.profile-fields > div > input[type="number"] {
   width: 100%;
   padding: 26px 20px;
   margin: 8px 0;
@@ -689,14 +714,14 @@ main.reserve-container {
 }
 .reservation-title {
   font-weight: 700;
-  font-size: 36px;
+  font-size: 2rem;
 }
 .reservation-title > a > img {
-  width: 28px;
-  height: 46px;
+  width: 18px;
+  height: 30px;
 }
 .reservation-title > span {
-  margin-left: 3rem;
+  margin-left: 2rem;
 }
 .reserve-detail {
   padding: 121px 0 60px 0;
@@ -722,24 +747,18 @@ main.reserve-container {
   font-size: 36px;
   font-family: "Playfair Display";
 }
-.no-prepayment {
-  font-weight: 700;
-  font-size: 24px;
-  color: #9b0a0a;
-}
 .reserve-amount > button,
 .reserve-amount > div {
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 900;
-  font-size: 48px;
-  margin: 74px 0px;
+  font-size: 2rem;
 }
 .rmv-btn,
 .add-btn {
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   border-radius: 10px;
 }
 .rmv-btn {
@@ -1151,6 +1170,137 @@ img.view-more-new-arrival {
   flex-wrap: wrap;
 }
 
+/******* ========== ADD VEHICLE ========== *******/
+.add-vehicle-main {
+  padding: 3rem 6%;
+}
+.add-image-container {
+  flex: 1;
+  color: #b8becd;
+  font-weight: 700;
+  font-size: 1.5vw;
+}
+.add-vehicle-detail-container {
+  flex: 1;
+}
+.add-image-container > .add-main-image,
+.add-image-container > .add-alt-image-container > div {
+  border-radius: 10px;
+  background-color: #f5f5f6;
+}
+.add-main-image {
+  width: 35vw;
+  height: 30vw;
+  min-width: 20vw;
+  min-height: 20vw;
+  background-position: center;
+  background-size: cover;
+}
+.add-main-image > img {
+  width: 10vw;
+  height: 10vw;
+}
+.add-alt-image1 {
+  margin: 1rem 1rem 0 0;
+  background-position: center;
+  background-size: cover;
+}
+.add-alt-image2 {
+  margin: 1rem 0 0 0;
+}
+.add-alt-image1,
+.add-alt-image2 {
+  width: 15vw;
+  height: 10vw;
+}
+.add-alt-image1 > img {
+  width: 5vw;
+  height: 5vw;
+}
+.add-alt-image2 > div {
+  font-weight: 900;
+  font-size: 2rem;
+}
+.add-vehicle-detail-container > input {
+  border-width: 0 0 1px 0;
+  margin-bottom: 1rem;
+}
+.add-vehicle-detail-container > input.vehiclePrice,
+.vehicle-status {
+  border: none;
+  border-radius: 10px;
+  background-color: #f5f5f6;
+  padding: 1rem 1rem;
+}
+.add-vehicle-detail-container > p,
+.vehicle-stock > p {
+  font-family: "Playfair Display";
+  font-weight: 700;
+  font-size: 1rem;
+}
+.vehicle-stock {
+  margin-top: 1rem;
+}
+.vehicle-stock > p {
+  flex: 1;
+}
+.vehicle-stock > div {
+  flex: 1;
+}
+.add-vehicle-button > select,
+.add-vehicle-button > button {
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 1rem;
+}
+.add-item-button {
+  flex: 2;
+  margin: 0 1rem 0 0;
+  border-radius: 10px;
+  background: #393939;
+  color: #ffcd61;
+}
+.save-item-button {
+  flex: 3;
+  margin: 0 1rem 0 0;
+  border-radius: 10px;
+  background: #ffcd61;
+  color: #393939;
+}
+@media (max-width: 1200px) {
+  .add-vehicle-container {
+    flex-direction: column !important;
+  }
+}
+@media (max-width: 768px) {
+  .add-main-image {
+    width: 300px;
+    height: 250px;
+  }
+  .add-main-image > img {
+    width: 75px;
+    height: 75px;
+  }
+  .add-alt-image1,
+  .add-alt-image2 {
+    width: 115px;
+    height: 76px;
+  }
+  .add-image-container {
+    font-size: 0.75rem;
+  }
+  .add-alt-image1 > img {
+    width: 38px;
+    height: 38px;
+  }
+}
+@media (max-width: 576px) {
+  .add-vehicle-button > select,
+  .add-vehicle-button > button {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}
 /******* ========== FOOTER ========== *******/
 footer {
   background-color: #f9f9fb;
@@ -1158,6 +1308,10 @@ footer {
 }
 .footer-column {
   padding-left: 5%;
+  flex: 1;
+}
+.footer-column-2 {
+  flex: 1;
 }
 .footer-column > p {
   margin-bottom: 8px;
@@ -1324,12 +1478,7 @@ footer {
 
 @media only screen and (max-width: 768px) {
   .width-dropdown {
-    display: grid;
     width: 100%;
-    grid-template-areas:
-      "location type"
-      "payment date";
-    grid-gap: 35px;
     justify-items: center;
   }
   .hero-container {
@@ -1397,20 +1546,15 @@ footer {
   main.reserve-container {
     padding: 6% 6%;
   }
-  .no-prepayment {
-    font-size: 1rem;
-  }
   .reserve-amount > button,
   .reserve-amount > div {
     font-weight: 700;
-    font-size: 24px;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    font-size: 1.5rem;
   }
   .rmv-btn,
   .add-btn {
-    width: 60px;
-    height: 60px;
+    width: 30px;
+    height: 30px;
     border-radius: 10px;
   }
   .reserve-date-title {
@@ -1474,7 +1618,6 @@ footer {
     grid-template-areas:
       "location"
       "type"
-      "payment"
       "date";
   }
   .title-hero {
@@ -1485,16 +1628,9 @@ footer {
   .testimonials-title {
     font-size: 24px;
   }
-  .main-article {
-    padding: 2rem 6%;
-  }
   .subtitle-hero {
     padding-top: 3rem;
     font-size: 18px;
-  }
-  .bg-hero {
-    padding: 1rem;
-    height: 650px;
   }
   .review {
     padding: 35px 0;
