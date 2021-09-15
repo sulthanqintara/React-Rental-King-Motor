@@ -20,7 +20,6 @@ function AddVehicle(props) {
   const [vehicleLocation, setvehicleLocation] = useState("");
   const [vehicleDescription, setVehicleDescription] = useState("");
   const [vehiclePrice, setVehiclePrice] = useState("");
-  const [vehicleStatus, setVehicleStatus] = useState("");
   const [vehicleAmount, setvehicleAmount] = useState("");
   const [vehicleType, setvehicleType] = useState("");
   const hiddenFileInput1 = React.useRef(null);
@@ -140,21 +139,6 @@ function AddVehicle(props) {
               placeholder="Type the price"
               onChange={(value) => setVehiclePrice(value.target.value)}
             />
-            <p>Status:</p>
-            <select
-              className="vehicle-status"
-              name="vehicleStatus"
-              defaultValue="statusTitle"
-              onChange={(value) => {
-                setVehicleStatus(value.target.value);
-              }}
-            >
-              <option value="statusTitle" disabled>
-                Select status
-              </option>
-              <option value="available">Available</option>
-              <option value="fullBooked">Full Booked</option>
-            </select>
             <div className="vehicle-stock d-flex">
               <p>Stock:</p>
               <CounterButton
