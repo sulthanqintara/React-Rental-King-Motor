@@ -4,14 +4,10 @@ import { Redirect, Route } from "react-router-dom";
 
 export function PrivateRoute({ children, ...rest }) {
   const authState = useSelector((reduxState) => reduxState.auth);
-  const [allowed, setAllowed] = useState(false);
-  useEffect(() => {
-    setAllowed(true);
-  }, [authState.isLogin]);
   return (
     <Route
       {...rest}
-      render={() => (allowed ? children : <Redirect to="/" />)}
+      render={() => (authState.isLogin ? children : <Redirect to="/" />)}
     />
   );
 }

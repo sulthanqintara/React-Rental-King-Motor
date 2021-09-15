@@ -6,7 +6,7 @@ const defaultState = {
   isPending: false,
   isFulfilled: false,
   isRejected: false,
-  isLogin: false,
+  isLogin: localStorage.getItem("userInfo") ? true : false,
   error: {},
 };
 
@@ -25,6 +25,7 @@ const authReducer = (prevstate = defaultState, action) => {
         ...prevstate,
         isPending: false,
         isRejected: true,
+        isLogin: false,
         error: action.payload,
       };
     case signIn.concat("_", Fulfilled):
