@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { profileAction } from "../redux/actionCreators/profile";
+import Swal from "sweetalert2";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -15,7 +16,7 @@ class Profile extends React.Component {
     address: "",
     phone: "",
     userName: "",
-    dob: "",
+    dob: new Date(this.props.auth.authInfo?.dob).toLocaleDateString("en-CA"),
     files: "",
   };
   constructor(props) {
@@ -28,18 +29,39 @@ class Profile extends React.Component {
   };
   updateProfileHandler = () => {
     const form = new FormData();
-    form.append("email", this.state.email);
+    form.append("email", this.state.email || this.props.auth.authInfo.email);
     this.state.files !== "" && form.append("profile_picture", this.state.files);
-    form.append("gender", this.state.gender);
+    form.append("gender", this.state.gender || this.props.auth.authInfo.email);
     form.append(
       "address",
       this.state.address || this.props.auth.authInfo.address
     );
-    form.append("phone_number", this.state.phone);
-    form.append("name", this.state.userName);
-    form.append("DOB", this.state.dob);
-    console.log(this.props.auth.authInfo.user_id);
-    this.props.updateProfile(form, this.props.auth.authInfo.user_id);
+    form.append(
+      "phone_number",
+      this.state.phone || this.props.auth.authInfo.phone
+    );
+    form.append(
+      "name",
+      this.state.userName || this.props.auth.authInfo.userName
+    );
+    form.append("DOB", this.state.dob || this.props.auth.authInfo.email);
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      confirmButtonColor: "#198754",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+      icon: "question",
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Saved!", "", "success");
+        this.props.updateProfile(form, this.props.auth.authInfo.user_id);
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
   };
 
   render() {
@@ -70,7 +92,8 @@ class Profile extends React.Component {
             <p className="profile-name">{this.props.auth.authInfo.userName}</p>
             <p className="profile-desc">
               {this.props.auth.authInfo.email}
-              <br />+{this.props.auth.authInfo.phone}
+              <br />
+              {this.props.auth.authInfo.phone}
             </p>
             <div className="gender">
               <label className="gender-container">
@@ -162,9 +185,8 @@ class Profile extends React.Component {
                     type="date"
                     id="DD/MM/YY"
                     name="DD/MM/YY"
-                    defaultValue={this.props.auth.authInfo.dob.split("T")[0]}
+                    defaultValue={this.state.dob}
                     onChange={(e) => {
-                      console.log(this.state.dob);
                       this.setState({ dob: e.target.value });
                     }}
                   />

@@ -1,20 +1,14 @@
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import { Component } from "react";
 import { NavDropdown } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { loggedInAction, logoutAction } from "../redux/actionCreators/auth";
+import Swal from "sweetalert2";
+
+import { Component } from "react";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 
 class Header extends Component {
-  state = {
-    isLogoutButtonClicked: false,
-  };
-  componentDidMount() {
-    if (localStorage.getItem("token")) {
-      this.props.signedIn();
-    }
-  }
   signOutHandler = () => {
     this.props.signOut();
     this.props.history.push("/auth");
@@ -170,7 +164,18 @@ class Header extends Component {
                       <button
                         className="fw-bold p-0 logout-btn"
                         onClick={() => {
-                          this.setState({ isLogoutButtonClicked: true });
+                          Swal.fire({
+                            title: "Are you sure you want to log out?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#d33",
+                            cancelButtonColor: "#00000",
+                            confirmButtonText: "Yes, log me out!",
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              this.signOutHandler();
+                            }
+                          });
                         }}
                       >
                         Logout
@@ -193,33 +198,6 @@ class Header extends Component {
             </Navbar.Collapse>
           </Navbar>
         </header>
-        {this.state.isLogoutButtonClicked ? (
-          <section className="confirm-logout d-flex align-items-center justify-content-center">
-            <div className="confirm-logout-box d-flex align-items-center flex-column">
-              Are you sure you want to logout?
-              <div className="my-3 d-flex justify-content-around w-100">
-                <button
-                  type="button"
-                  onClick={this.signOutHandler}
-                  className="btn btn-danger"
-                >
-                  Logout
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    this.setState({ isLogoutButtonClicked: false });
-                  }}
-                  className="btn btn-success"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </section>
-        ) : (
-          ""
-        )}
       </>
     );
   }

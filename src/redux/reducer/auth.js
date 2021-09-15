@@ -2,7 +2,9 @@ import { signedIn, signIn, signOut } from "../actionCreators/actionString";
 import { ActionType } from "redux-promise-middleware";
 
 const defaultState = {
-  authInfo: {},
+  authInfo: JSON.parse(localStorage.getItem("userInfo"))
+    ? JSON.parse(localStorage.getItem("userInfo"))
+    : {},
   isPending: false,
   isFulfilled: false,
   isRejected: false,
@@ -29,6 +31,7 @@ const authReducer = (prevstate = defaultState, action) => {
         error: action.payload,
       };
     case signIn.concat("_", Fulfilled):
+      console.log(action.payload.data.result.userInfo);
       localStorage.setItem("token", String(action.payload.data.result.token));
       localStorage.setItem(
         "userInfo",
@@ -38,7 +41,7 @@ const authReducer = (prevstate = defaultState, action) => {
         ...prevstate,
         isPending: false,
         isFulfilled: true,
-        authInfo: action.payload.data.result,
+        authInfo: action.payload.data.result.userInfo,
         isLogin: true,
       };
     case signedIn:
