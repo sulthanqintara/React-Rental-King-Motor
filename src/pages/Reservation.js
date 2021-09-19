@@ -1,11 +1,13 @@
 import { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { postTransactions } from "../utils/https/Transaction";
+import Axios from "axios";
 
+import Swal from "sweetalert2";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import backIcon from "../assets/img/icon/arrow-left.png";
-import Axios from "axios";
 import CounterButton from "../components/CounterButton";
 import { countDownAction, countUpAction } from "../redux/actionCreators/count";
 
@@ -13,7 +15,10 @@ class Reservation extends Component {
   state = {
     picture: "",
     reserved: 1,
+    duration: 1,
+    reserveStartDate: "",
   };
+
   onMinusHandler = () => {
     this.props.dispatch(countDownAction());
   };
@@ -29,7 +34,6 @@ class Reservation extends Component {
         };
       });
   };
-
   removeReserve = () => {
     this.setState((prevState) => {
       if (this.state.reserved > 1) {
@@ -38,6 +42,42 @@ class Reservation extends Component {
         };
       }
     });
+  };
+
+  postPayHandler = () => {
+    if (!this.state.reserveStartDate)
+      return Swal.fire("Please Choose Rent Date!", "", "error");
+    const reduxState = this.props.reduxState;
+    const { id } = this.props.match.params;
+    const pickedDate = new Date(`${this.state.reserveStartDate}`);
+    const finishedDate = new Date(
+      pickedDate.setDate(pickedDate.getDate() + Number(this.state.duration))
+    ).toLocaleDateString("en-CA");
+    const payment_code = String(
+      `#${id}${reduxState.auth.authInfo.user_id}${
+        this.state.location.split("")[0]
+      }${new Date().getMilliseconds()}${
+        this.state.model.split("")[0]
+      }${this.state.category.split("", [0])}`
+    );
+    const body = {
+      user_id: reduxState.auth.authInfo.user_id,
+      model_id: id,
+      amount_rented: reduxState.count.number,
+      prepayment: reduxState.count.number * this.state.price,
+      rent_start_date: String(this.state.reserveStartDate),
+      rent_finish_date: String(finishedDate),
+      payment_method: 1,
+      payment_code,
+    };
+
+    postTransactions(body)
+      .then((data) => {
+        this.props.history.push(`/payment/${data.data.result}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   componentDidMount() {
@@ -57,11 +97,13 @@ class Reservation extends Component {
           picture: arrayResult.picture,
           price: arrayResult.price,
         });
+        localStorage.setItem("vehicleData", JSON.stringify(arrayResult));
       })
       .catch((err) => {
         console.log(err);
       });
   }
+
   render() {
     const pic = this.state.picture;
     const { reduxState, countUp, countDown } = this.props;
@@ -112,13 +154,18 @@ class Reservation extends Component {
                 <input
                   className="reserve-date"
                   type="date"
-                  id="DD/MM/YY"
-                  name="DD/MM/YY"
-                  defaultValue=""
+                  onChange={(e) => {
+                    this.setState({ reserveStartDate: e.target.value });
+                  }}
                 />
               </div>
-              <select className="duration" name="" id="">
-                <option defaultValue="1">1 Day</option>
+              <select
+                className="duration"
+                onChange={(e) => {
+                  this.setState({ duration: e.target.value });
+                }}
+              >
+                <option value="1">1 Day</option>
                 <option value="2">2 Days</option>
                 <option value="3">3 Days</option>
                 <option value="4">4 Days</option>
@@ -126,11 +173,9 @@ class Reservation extends Component {
               </select>
             </div>
           </section>
-          <Link to="/payment">
-            <button className="btn-pay">
-              Pay now : Rp. {reduxState.count.number * this.state.price}
-            </button>
-          </Link>
+          <button className="btn-pay" onClick={this.postPayHandler}>
+            Pay now : Rp. {reduxState.count.number * this.state.price}
+          </button>
         </main>
         <Footer />
       </>

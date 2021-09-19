@@ -899,9 +899,10 @@ div.payment-title-container {
   flex: 3;
 }
 img.payment-pic {
-  width: 100%;
-  height: auto;
+  width: 30rem;
+  height: 20rem;
   border-radius: 10px;
+  object-fit: cover;
 }
 
 .booking-code {
@@ -980,7 +981,9 @@ select.payment-methods {
   font-size: 24px;
   border: none;
 }
-.finish-payment-btn > span {
+.pay-before {
+  font-size: 1.5rem;
+  font-weight: 700;
   color: red;
 }
 
@@ -1093,7 +1096,7 @@ select.payment-methods {
   border-radius: 10px;
 }
 .filter > select {
-  width: 25%;
+  width: 23%;
   border: 0.5px solid #c4c4c4;
   box-sizing: border-box;
   border-radius: 10px;
@@ -1106,15 +1109,13 @@ select.payment-methods {
 }
 .time-stamp {
   color: #c4c4c4;
-  padding: 30px 0;
+  padding: 1.5rem 0;
 }
 .history-item {
   margin: 1rem 0;
 }
-.history-item > a > div {
-  flex: 1;
-}
-.history-item > a > img {
+
+.history-item > div > img {
   height: 22px;
   width: 14px;
 }
@@ -1224,6 +1225,9 @@ img.view-more-new-arrival {
 .add-vehicle-detail-container > input {
   border-width: 0 0 1px 0;
   margin-bottom: 1rem;
+}
+.add-vehicle-detail-container > input:focus-visible {
+  outline: none;
 }
 .add-vehicle-detail-container > input.vehiclePrice,
 .vehicle-status {
@@ -1751,5 +1755,14 @@ footer {
   .more-detail-big-pic {
     width: 75vw;
     height: 75vw;
+  }
+  img.payment-pic {
+    height: 55vw;
+  }
+  .finish-payment-btn {
+    font-size: 18px;
+  }
+  .pay-before {
+    font-size: 1.25rem;
   }
 }

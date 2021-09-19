@@ -50,7 +50,6 @@ class Login extends Component {
   };
   componentDidUpdate() {
     if (this.props.auth.isLogin) {
-      console.log(this.props.auth.authInfo);
       this.props.history.push("/");
     }
   }

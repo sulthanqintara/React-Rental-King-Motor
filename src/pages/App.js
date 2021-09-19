@@ -51,7 +51,7 @@ class AppWithRouter extends Component {
           <Route path="/detail/:id">
             <ViewDetail />
           </Route>
-          <PrivateRoute path="/payment">
+          <PrivateRoute path="/payment/:id">
             <Payment />
           </PrivateRoute>
           <PrivateRoute path="/chat">

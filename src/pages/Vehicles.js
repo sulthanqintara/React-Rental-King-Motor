@@ -21,7 +21,6 @@ class Vehicles extends Component {
   axiosGet = (query) => {
     Axios.get(`http://localhost:8000/vehicles${query}`)
       .then(({ data }) => {
-        console.log(data.result);
         this.setState({
           search: data.result,
         });

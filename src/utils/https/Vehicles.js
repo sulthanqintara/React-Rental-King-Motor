@@ -15,3 +15,7 @@ export const patchVehicle = (body, params) => {
     headers: { "x-access-token": `Bearer ${token}` },
   });
 };
+
+export const getVehicle = (body) => {
+  return axios.get(`${url}/vehicles`, { params: body });
+};

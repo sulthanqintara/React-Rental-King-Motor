@@ -9,6 +9,7 @@ import CounterButton from "../components/CounterButton";
 import { countDownAction, countUpAction } from "../redux/actionCreators/count";
 import cameraIcon from "../assets/img/icon/camera-icon.png";
 import { postVehicleAction } from "../redux/actionCreators/vehicles";
+import Swal from "sweetalert2";
 
 function AddVehicle(props) {
   const counter = useSelector((reduxState) => reduxState.count);
@@ -52,7 +53,7 @@ function AddVehicle(props) {
     form.append("picture", secondPic);
     form.append("picture", thirdPic);
     props.postVehicleAction(form);
-    window.alert("Vehicle Added!");
+    Swal.fire("Vehicle Added!", "", "success");
   };
   return (
     <>

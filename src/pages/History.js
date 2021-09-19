@@ -1,35 +1,18 @@
 import React, { Component } from "react";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import arrow from "../assets/img/icon/arrow-left.png";
-import HistoryComponent from "../components/HistoryComponent";
-import Card from "../components/Cards";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { getTransaction, deleteTransaction } from "../utils/https/Transaction";
 
-export default class History extends Component {
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import arrow from "../assets/img/icon/arrow-left.png";
+import Card from "../components/Cards";
+import HistoryComponent from "../components/HistoryComponent";
+import { connect } from "react-redux";
+import Swal from "sweetalert2";
+
+class History extends Component {
   state = {
-    history: [
-      {
-        id: 1,
-        imageUrl:
-          "https://user-images.githubusercontent.com/38064315/130650803-5a568c0c-c991-4492-a95c-ccec2a70cc47.jpg",
-        vehicleName: "Vespa Matic",
-        rentStart: "2021-01-18",
-        rentFinish: "2021-01-21",
-        price: 245000,
-        rentStatus: true,
-      },
-      {
-        id: 2,
-        imageUrl:
-          "https://user-images.githubusercontent.com/38064315/130651301-89e91b51-92c2-44be-af18-87015266e220.jpg",
-        vehicleName: "Honda",
-        rentStart: "2021-01-18",
-        rentFinish: "2021-01-21",
-        price: 245000,
-        rentStatus: true,
-      },
-    ],
+    history: [],
     newArrival: [
       {
         id: 5,
@@ -46,7 +29,87 @@ export default class History extends Component {
           "https://user-images.githubusercontent.com/38064315/130650291-09e9a5a4-c62c-4edf-8fc3-c8d234dca9fc.jpg",
       },
     ],
+    search: "",
+    dateFilter: "",
+    selectedHistory: "",
   };
+  authInfo = this.props.auth.authInfo;
+  authLevel = Number(this.authInfo.authLevel);
+
+  searchHandler = (e) => {
+    e.preventDefault();
+    let dateParams = "";
+    const currentDate = new Date();
+    switch (Number(this.state.dateFilter)) {
+      case 1:
+        dateParams = new Date(
+          currentDate.setDate(currentDate.getDate() - 1)
+        ).toLocaleDateString("en-CA");
+        break;
+      case 2:
+        dateParams = new Date(
+          currentDate.setDate(currentDate.getDate() - 7)
+        ).toLocaleDateString("en-CA");
+        break;
+      case 3:
+        dateParams = "0000-00-00";
+        break;
+      default:
+        dateParams = "";
+    }
+    const params =
+      this.authLevel === 3
+        ? {
+            user_id: this.authInfo.user_id,
+            keyword: this.state.search,
+            filter_date: dateParams,
+            sort: "DESC",
+          }
+        : {
+            owner_id: this.authInfo.user_id,
+            keyword: this.state.search,
+            filter_date: dateParams,
+            sort: "DESC",
+          };
+    getTransaction(params).then((data) => {
+      this.setState({ history: data.data.result.data });
+    });
+  };
+
+  deleteHandler = (e) => {
+    e.preventDefault();
+    if (!this.state.selectedHistory)
+      return Swal.fire("Please Choose History!", "", "error");
+    const form = new URLSearchParams();
+    form.append("id", Number(this.state.selectedHistory));
+    Swal.fire({
+      title: "Are you sure you want to delete that history?",
+      showCancelButton: true,
+      confirmButtonText: "Delete!",
+      denyButtonText: `Don't delete!`,
+      confirmButtonColor: "#bb2d3b",
+      cancelButtonColor: "#198754",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteTransaction(form)
+          .then((date) => Swal.fire("Item Deleted!", "", "success"))
+          .catch((err) => console.log(err));
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  };
+
+  componentDidMount() {
+    const params =
+      this.authLevel === 3
+        ? { user_id: this.authInfo.user_id }
+        : { owner_id: this.authInfo.user_id };
+    getTransaction(params).then((data) => {
+      return this.setState({ history: data.data.result.data });
+    });
+  }
+
   render() {
     return (
       <div>
@@ -54,86 +117,134 @@ export default class History extends Component {
         <main className="d-flex history-main">
           <div className="d-flex flex-column flex-fill">
             <div className="d-flex search-container">
-              <form className="flex-grow-7">
+              <form className="flex-grow-7" onSubmit={this.searchHandler}>
                 <input
                   type="text"
-                  id="search"
                   placeholder="Search History"
                   autoComplete="off"
                   className="search-form-history"
+                  onChange={(e) => {
+                    this.setState({ search: e.target.value });
+                  }}
                 />
               </form>
               <div className="d-flex align-items-center flex-column history-checkbox">
-                <label htmlFor="selectAll">Select</label>
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="selectAll"
-                />
+                Select
               </div>
             </div>
-            <div className="filter">
+            <div className="filter d-flex ">
               <select
-                defaultValue="default"
+                defaultValue="0"
                 className="form-select"
                 aria-label="select"
+                onChange={(e) => {
+                  this.setState({ dateFilter: e.target.value });
+                }}
               >
-                <option value="default" hidden disabled>
-                  Filter
+                <option value="0" hidden disabled>
+                  Date Added
                 </option>
-                <option value="type">Type</option>
-                <option value="date">Date Added</option>
-                <option value="name">Name</option>
-                <option value="favourite">Favourite Product</option>
+                <option value="1">Today</option>
+                <option value="2">A week ago</option>
+                <option value="3">More than a week ago</option>
               </select>
             </div>
-            <div className="history-container">
+            <form
+              className="history-container"
+              onChange={(e) => {
+                this.setState({ selectedHistory: e.target.value });
+              }}
+            >
               <div className="time-stamp">Today</div>
-              <div className="d-flex history-item align-items-center">
-                <Link to="#" className="d-flex flex-grow-7 align-items-center">
-                  <div>
-                    Please finish your payment for vespa for Vespa Rental Jogja
-                  </div>
-                  <img alt="" className="flip-image" src={arrow}></img>
-                </Link>
-                <div className="d-flex justify-content-center history-checkbox">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="selectAll"
-                  />
-                </div>
-              </div>
-              <div className="d-flex history-item align-items-center">
-                <Link to="#" className="d-flex flex-grow-7 align-items-center">
-                  <div>Your payment has been confirmed!</div>
-                  <img alt="" className="flip-image" src={arrow}></img>
-                </Link>
-                <div className="d-flex justify-content-center history-checkbox">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="selectAll"
-                  />
-                </div>
-              </div>
+              {this.state.history.map((data) => {
+                const currentDate = new Date();
+                if (
+                  new Date(data.rent_start_date) >=
+                  new Date(currentDate.setDate(currentDate.getDate() - 1))
+                )
+                  return (
+                    <HistoryComponent
+                      key={data.id}
+                      id={data.id}
+                      vehicleId={data.model_id}
+                      vehicleName={data.model}
+                      rentStart={new Date(
+                        data.rent_start_date
+                      ).toLocaleDateString("en-CA")}
+                      rentFinish={new Date(
+                        data.rent_finish_date
+                      ).toLocaleDateString("en-CA")}
+                      price={data.prepayment}
+                      returned={data.returned_status}
+                      userPaid={data.user_paid_status}
+                      sellerPaid={data.seller_paid_status}
+                      authLevel={this.authLevel}
+                    />
+                  );
+                return "";
+              })}
               <div className="time-stamp">A week ago</div>
               {this.state.history.map((data) => {
-                return (
-                  <HistoryComponent
-                    key={data.id}
-                    id={data.id}
-                    imageUrl={data.imageUrl}
-                    vehicleName={data.vehicleName}
-                    rentStart={data.rentStart}
-                    rentFinish={data.rentFinish}
-                    price={data.price}
-                    status={data.rentStatus}
-                  />
-                );
+                const currentDate = new Date();
+                if (
+                  new Date(data.rent_start_date) <=
+                    new Date(currentDate.setDate(currentDate.getDate() - 1)) &&
+                  new Date(data.rent_start_date) >=
+                    new Date(currentDate.setDate(currentDate.getDate() - 7))
+                )
+                  return (
+                    <HistoryComponent
+                      key={data.id}
+                      id={data.id}
+                      vehicleId={data.model_id}
+                      vehicleName={data.model}
+                      rentStart={new Date(
+                        data.rent_start_date
+                      ).toLocaleDateString("en-CA")}
+                      rentFinish={new Date(
+                        data.rent_finish_date
+                      ).toLocaleDateString("en-CA")}
+                      price={data.prepayment}
+                      returned={data.returned_status}
+                      userPaid={data.user_paid_status}
+                      sellerPaid={data.seller_paid_status}
+                      authLevel={this.authLevel}
+                    />
+                  );
+                return "";
               })}
-              <button className="delete-btn">Delete selected item</button>
-            </div>
+              <div className="time-stamp">More than a week ago</div>
+              {this.state.history.map((data) => {
+                const currentDate = new Date();
+                if (
+                  new Date(data.rent_start_date) <=
+                  new Date(currentDate.setDate(currentDate.getDate() - 7))
+                )
+                  return (
+                    <HistoryComponent
+                      key={data.id}
+                      id={data.id}
+                      vehicleId={data.model_id}
+                      vehicleName={data.model}
+                      rentStart={new Date(
+                        data.rent_start_date
+                      ).toLocaleDateString("en-CA")}
+                      rentFinish={new Date(
+                        data.rent_finish_date
+                      ).toLocaleDateString("en-CA")}
+                      price={data.prepayment}
+                      returned={data.returned_status}
+                      userPaid={data.user_paid_status}
+                      sellerPaid={data.seller_paid_status}
+                      authLevel={this.authLevel}
+                    />
+                  );
+                return "";
+              })}
+              <button className="delete-btn" onClick={this.deleteHandler}>
+                Delete selected item
+              </button>
+            </form>
           </div>
           <div className="new-arrival">
             <div className="text-center new-arrival-title">New Arrival</div>
@@ -163,3 +274,11 @@ export default class History extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ auth }) => {
+  return {
+    auth,
+  };
+};
+
+export default connect(mapStateToProps)(withRouter(History));

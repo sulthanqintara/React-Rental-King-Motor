@@ -1,14 +1,14 @@
 import { signedIn, signIn, signOut } from "../actionCreators/actionString";
 import { ActionType } from "redux-promise-middleware";
 
+const authInfoLocalStorage = JSON.parse(localStorage.getItem("userInfo"));
+
 const defaultState = {
-  authInfo: JSON.parse(localStorage.getItem("userInfo"))
-    ? JSON.parse(localStorage.getItem("userInfo"))
-    : {},
+  authInfo: authInfoLocalStorage ? authInfoLocalStorage : {},
   isPending: false,
   isFulfilled: false,
   isRejected: false,
-  isLogin: localStorage.getItem("userInfo") ? true : false,
+  isLogin: authInfoLocalStorage ? true : false,
   error: {},
 };
 
@@ -31,7 +31,6 @@ const authReducer = (prevstate = defaultState, action) => {
         error: action.payload,
       };
     case signIn.concat("_", Fulfilled):
-      console.log(action.payload.data.result.userInfo);
       localStorage.setItem("token", String(action.payload.data.result.token));
       localStorage.setItem(
         "userInfo",

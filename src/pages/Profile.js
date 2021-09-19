@@ -25,7 +25,6 @@ class Profile extends React.Component {
   }
   handleClick = (e) => {
     this.setState({ files: this.myRef.current.click() });
-    console.log(this.state.files);
   };
   updateProfileHandler = () => {
     const form = new FormData();
@@ -54,7 +53,6 @@ class Profile extends React.Component {
       denyButtonText: `Don't save`,
       icon: "question",
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         Swal.fire("Saved!", "", "success");
         this.props.updateProfile(form, this.props.auth.authInfo.user_id);

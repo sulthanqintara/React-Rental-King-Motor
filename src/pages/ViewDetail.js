@@ -22,7 +22,6 @@ class ViewDetail extends Component {
     })
       .then(({ data }) => {
         const arrayResult = data.result[0];
-        console.log(arrayResult);
         this.setState({
           amount_available: arrayResult.amount_available,
           id: arrayResult.id,

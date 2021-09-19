@@ -10,6 +10,7 @@ import { countDownAction, countUpAction } from "../redux/actionCreators/count";
 import cameraIcon from "../assets/img/icon/camera-icon.png";
 import { patchVehicleAction } from "../redux/actionCreators/vehicles";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function EditVehicle(props) {
   const url = `${process.env.REACT_APP_BASE_URL}/vehicles`;
@@ -98,6 +99,7 @@ function EditVehicle(props) {
     secondPic && form.append("picture", secondPic);
     thirdPic && form.append("picture", thirdPic);
     props.patchVehicleAction(form, id);
+    Swal.fire("Vehicle Edited", "", "success");
   };
   return (
     <>
