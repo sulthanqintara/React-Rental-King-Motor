@@ -72,7 +72,11 @@ class Profile extends React.Component {
             <div
               className="profile-photo profile-display"
               style={{
-                backgroundImage: `url(${this.props.auth.authInfo.profilePic})`,
+                backgroundImage: `url(${
+                  this.props.auth.authInfo.profilePic
+                    ? this.props.auth.authInfo.profilePic
+                    : "http://localhost:8000/img/profile-icon-png-898.png"
+                })`,
               }}
             >
               <button className="edit-profile" onClick={this.handleClick}>

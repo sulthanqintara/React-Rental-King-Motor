@@ -139,7 +139,11 @@ class Header extends Component {
                   <NavDropdown
                     className="profile-icon profile-photo"
                     style={{
-                      backgroundImage: `url(${this.props.auth.authInfo.profilePic})`,
+                      backgroundImage: `url(${
+                        this.props.auth.authInfo.profilePic
+                          ? this.props.auth.authInfo.profilePic
+                          : "http://localhost:8000/img/profile-icon-png-898.png"
+                      })`,
                     }}
                     title=""
                     id=""
