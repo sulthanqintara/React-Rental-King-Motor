@@ -13,7 +13,9 @@ class ViewDetail extends Component {
   state = {
     picture: "",
     amount_available: 0,
+    ownerId: 0,
   };
+
   componentDidMount() {
     const { id } = this.props.match.params;
     const url = "http://localhost:8000/vehicles";
@@ -30,6 +32,7 @@ class ViewDetail extends Component {
           picture: arrayResult.picture,
           price: arrayResult.price,
           category: arrayResult.category,
+          ownerId: arrayResult.owner,
         });
       })
       .catch((err) => {
@@ -141,19 +144,17 @@ class ViewDetail extends Component {
               <Link to="/" className="chat-admin mt-2 px-3">
                 <button className="chat-admin">Add to Homepage</button>
               </Link>
-              <Link
-                to={`/editvehicle/${this.state.id}`}
-                className="reserve-from-detail mt-2 px-3"
-              >
-                {reduxState.auth.authInfo.id === this.state.id ||
-                reduxState.auth.authInfo.authLevel === 1 ? (
+              {console.log(this.state.ownerId)}
+
+              {(reduxState.auth.authInfo.user_id === this.state.ownerId ||
+                reduxState.auth.authInfo.authLevel === 1) && (
+                <Link
+                  to={`/editvehicle/${this.state.id}`}
+                  className="reserve-from-detail mt-2 px-3"
+                >
                   <button className="reserve-from-detail">Edit Vehicle</button>
-                ) : (
-                  <button disabled className="reserve-from-detail">
-                    Edit Vehicle
-                  </button>
-                )}
-              </Link>
+                </Link>
+              )}
             </section>
           )}
         </main>

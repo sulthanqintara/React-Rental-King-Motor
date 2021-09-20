@@ -24,7 +24,6 @@ class Payment extends Component {
     getTransactionByID(id)
       .then((data) => {
         this.setState({ transactionDetail: data.data.result });
-        console.log(this.state.transactionDetail);
         this.setState({
           paymentMethod: this.state.transactionDetail.payment_method,
         });
@@ -50,7 +49,7 @@ class Payment extends Component {
         ? {
             id: this.state.transactionDetail.id,
             user_paid_status: 1,
-            payment_method: this.state.paymentMethod,
+            payment_method: Number(this.state.paymentMethod),
           }
         : {
             id: this.state.transactionDetail.id,
@@ -183,16 +182,13 @@ class Payment extends Component {
                 </div>
               </div>
               <select
-                defaultValue={
-                  this.state.transactionDetail?.payment_method
-                    ? this.state.transactionDetail.payment_method
-                    : "title"
-                }
+                value={this.state.paymentMethod || "title"}
                 className="payment-methods"
                 onChange={(e) => {
                   this.setState({ paymentMethod: e.target.value });
                 }}
               >
+                {console.log(this.state.paymentMethod)}
                 <option value="title" disabled>
                   Select Payment Methods
                 </option>

@@ -83,7 +83,7 @@ function HistoryComponent({
             <div
               className="history-test"
               style={{
-                backgroundImage: `url(${image})`,
+                backgroundImage: `url(${image.split(",")[0]})`,
                 backgroundPosition: "center",
               }}
             />
