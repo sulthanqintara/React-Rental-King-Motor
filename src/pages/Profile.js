@@ -43,7 +43,11 @@ class Profile extends React.Component {
       "name",
       this.state.userName || this.props.auth.authInfo.userName
     );
-    form.append("DOB", this.state.dob || this.props.auth.authInfo.email);
+    form.append(
+      "DOB",
+      this.state.dob.toLocaleDateString("en-CA") ||
+        this.props.auth.authInfo.dob.toLocaleDateString("en-CA")
+    );
     Swal.fire({
       title: "Do you want to save the changes?",
       confirmButtonColor: "#198754",
