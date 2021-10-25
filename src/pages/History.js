@@ -113,9 +113,17 @@ class History extends Component {
       this.authLevel === 3
         ? { user_id: this.authInfo.user_id }
         : { owner_id: this.authInfo.user_id };
-    getTransaction(params).then((data) => {
-      return this.setState({ history: data.data.result.data, loading: false });
-    });
+    getTransaction(params)
+      .then((data) => {
+        return this.setState({
+          history: data.data.result.data,
+          loading: false,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ loading: false });
+      });
   }
 
   render() {
