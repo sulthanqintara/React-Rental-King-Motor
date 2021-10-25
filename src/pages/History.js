@@ -111,8 +111,8 @@ class History extends Component {
   componentDidMount() {
     const params =
       this.authLevel === 3
-        ? { user_id: this.authInfo.user_id }
-        : { owner_id: this.authInfo.user_id };
+        ? { user_id: this.authInfo.user_id, limit: 100 }
+        : { owner_id: this.authInfo.user_id, limit: 100 };
     getTransaction(params)
       .then((data) => {
         return this.setState({
@@ -184,7 +184,7 @@ class History extends Component {
               {this.state.history.map((data) => {
                 const currentDate = new Date();
                 if (
-                  new Date(data.rent_start_date) >=
+                  new Date(data.time_posted) >=
                   new Date(currentDate.setDate(currentDate.getDate() - 1))
                 )
                   return (
@@ -221,9 +221,9 @@ class History extends Component {
               {this.state.history.map((data) => {
                 const currentDate = new Date();
                 if (
-                  new Date(data.rent_start_date) <=
+                  new Date(data.time_posted) <=
                     new Date(currentDate.setDate(currentDate.getDate() - 1)) &&
-                  new Date(data.rent_start_date) >=
+                  new Date(data.time_posted) >=
                     new Date(currentDate.setDate(currentDate.getDate() - 7))
                 )
                   return (
@@ -260,7 +260,7 @@ class History extends Component {
               {this.state.history.map((data) => {
                 const currentDate = new Date();
                 if (
-                  new Date(data.rent_start_date) <=
+                  new Date(data.time_posted) <=
                   new Date(currentDate.setDate(currentDate.getDate() - 7))
                 )
                   return (

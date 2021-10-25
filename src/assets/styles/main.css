@@ -1208,10 +1208,10 @@ img.view-more-new-arrival {
   padding: 3rem 6%;
 }
 .add-image-container {
-  flex: 1;
+  flex: 1 1;
   color: #b8becd;
   font-weight: 700;
-  font-size: 1.5vw;
+  font-size: 1.25rem;
 }
 .add-vehicle-detail-container {
   flex: 1;
@@ -1221,30 +1221,33 @@ img.view-more-new-arrival {
   border-radius: 10px;
   background-color: #f5f5f6;
 }
+.add-alt-image-container {
+  margin-top: 1rem;
+}
 .add-main-image {
   width: 35vw;
   height: 30vw;
   min-width: 20vw;
   min-height: 20vw;
   background-position: center;
+  object-fit: cover;
   background-size: cover;
+  position: relative;
 }
 .add-main-image > img {
   width: 10vw;
   height: 10vw;
 }
 .add-alt-image1 {
-  margin: 1rem 1rem 0 0;
+  margin: 0 1rem 0 0;
   background-position: center;
   background-size: cover;
-}
-.add-alt-image2 {
-  margin: 1rem 0 0 0;
 }
 .add-alt-image1,
 .add-alt-image2 {
   width: 15vw;
   height: 10vw;
+  position: relative;
 }
 .add-alt-image1 > img {
   width: 5vw;
@@ -1254,6 +1257,24 @@ img.view-more-new-arrival {
   font-weight: 900;
   font-size: 2rem;
 }
+.second-pic-edit {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+.cam-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 15vw;
+  height: 10vw;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+}
+.cam-icon {
+  width: 80px;
+}
 .add-vehicle-detail-container > input {
   border-width: 0 0 1px 0;
   margin-bottom: 1rem;
@@ -1261,18 +1282,17 @@ img.view-more-new-arrival {
 .add-vehicle-detail-container > input:focus-visible {
   outline: none;
 }
-.add-vehicle-detail-container > input.vehiclePrice,
+.add-vehicle-detail-container > div > input.vehiclePrice,
 .vehicle-status {
   border: none;
   border-radius: 10px;
   background-color: #f5f5f6;
   padding: 1rem 1rem;
 }
-.add-vehicle-detail-container > p,
+.add-vehicle-detail-container > div > p,
 .vehicle-stock > p {
   font-family: "Playfair Display";
   font-weight: 700;
-  font-size: 1rem;
 }
 .vehicle-stock {
   margin-top: 1rem;
@@ -1286,7 +1306,7 @@ img.view-more-new-arrival {
 .add-vehicle-button > select,
 .add-vehicle-button > button {
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.5rem;
   padding: 1rem;
 }
 .add-item-button {
@@ -1302,6 +1322,7 @@ img.view-more-new-arrival {
   border-radius: 10px;
   background: #ffcd61;
   color: #393939;
+  height: 90px;
 }
 @media (max-width: 1200px) {
   .add-vehicle-container {
@@ -1322,9 +1343,6 @@ img.view-more-new-arrival {
     width: 115px;
     height: 76px;
   }
-  .add-image-container {
-    font-size: 0.75rem;
-  }
   .add-alt-image1 > img {
     width: 38px;
     height: 38px;
@@ -1335,6 +1353,7 @@ img.view-more-new-arrival {
   .add-vehicle-button > button {
     padding: 0.5rem;
     font-size: 0.9rem;
+    height: 4rem;
   }
 }
 /******* ========== FOOTER ========== *******/
@@ -1438,6 +1457,9 @@ footer {
     margin-right: auto;
     padding: 0 1rem;
   }
+  .add-image-container {
+    font-size: 1rem;
+  }
 }
 
 @media only screen and (max-width: 992px) {
@@ -1509,6 +1531,13 @@ footer {
   }
   .chat-item {
     width: 65%;
+  }
+  .cam-icon {
+    width: 50px;
+  }
+  .add-image-container {
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
   }
 }
 
@@ -1646,6 +1675,10 @@ footer {
   .more-detail-big-pic {
     width: 65vw;
     height: 65vw;
+  }
+  .cam-container {
+    width: 115px;
+    height: 76px;
   }
 }
 

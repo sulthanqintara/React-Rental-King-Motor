@@ -48,7 +48,7 @@ class ViewDetail extends Component {
   }
 
   render() {
-    const pic = url + this.state.picture;
+    const pic = this.state.picture;
     const { reduxState } = this.props;
     return (
       <>
@@ -77,7 +77,7 @@ class ViewDetail extends Component {
                   <img
                     className="more-detail-big-pic"
                     alt=""
-                    src={pic.split(",")[0]}
+                    src={url + pic.split(",")[0]}
                   />
                 </div>
                 <div className="d-flex align-items-center mt-5 justify-content-center slide-image">
@@ -87,13 +87,13 @@ class ViewDetail extends Component {
                   <img
                     className="more-detail-small-pic mx-3"
                     alt=""
-                    src={pic.split(",")[0]}
+                    src={pic.split(",")[0] && url + pic.split(",")[0]}
                   />
                   {pic.split(",")[1] ? (
                     <img
                       className="more-detail-small-pic mx-3"
                       alt=""
-                      src={pic.split(",")[1]}
+                      src={url + pic.split(",")[1]}
                     />
                   ) : (
                     ""

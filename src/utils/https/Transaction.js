@@ -31,7 +31,6 @@ export const patchTransaction = (body) => {
   });
 };
 export const deleteTransaction = (body) => {
-  console.log(body);
   return axios.delete(`${url}/transactions`, {
     headers: { "x-access-token": `Bearer ${token}` },
     data: body,

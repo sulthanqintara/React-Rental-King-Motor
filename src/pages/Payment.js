@@ -28,7 +28,12 @@ class Payment extends Component {
           Number(this.props.auth.authInfo.user_id) !==
           Number(data.data.result.user_id)
         ) {
-          return this.props.history.push("/");
+          if (
+            Number(this.props.auth.authInfo.user_id) !==
+            Number(data.data.result.owner_id)
+          ) {
+            return this.props.history.push("/");
+          }
         }
         this.setState({ transactionDetail: data.data.result });
         this.setState({

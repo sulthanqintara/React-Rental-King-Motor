@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -17,6 +17,9 @@ function AddVehicle(props) {
   const [mainPic, setMainPic] = useState("");
   const [secondPic, setSecondPic] = useState("");
   const [thirdPic, setThirdPic] = useState("");
+  const [mainPicBackground, setMainPicBackground] = useState("");
+  const [secondPicBackground, setSecondPicBackground] = useState("");
+  const [thirdPicBackground, setThirdPicBackground] = useState("");
   const [vehicleName, setVehicleName] = useState("");
   const [vehicleLocation, setvehicleLocation] = useState("");
   const [vehicleDescription, setVehicleDescription] = useState("");
@@ -55,6 +58,12 @@ function AddVehicle(props) {
     props.postVehicleAction(form);
     Swal.fire("Vehicle Added!", "", "success");
   };
+  useEffect(() => {
+    localStorage.setItem(
+      "vehicleData",
+      JSON.stringify({ amount_available: 100 })
+    );
+  }, []);
   return (
     <>
       <Header />
@@ -67,20 +76,37 @@ function AddVehicle(props) {
         </section>
         <section className="d-flex flex-row add-vehicle-container my-4">
           <div className="add-image-container d-flex flex-column align-items-center justify-content-center">
-            <button
+            <div
               style={{ cursor: "pointer" }}
               onClick={mainPicHandler}
               className="add-main-image d-flex align-items-center flex-column justify-content-center"
             >
-              <img alt="" src={cameraIcon} />
-              Click to add image
-            </button>
+              {!mainPicBackground ? (
+                <>
+                  <img alt="" src={cameraIcon} />
+                  Click to add image
+                </>
+              ) : (
+                <img
+                  alt=""
+                  src={mainPicBackground}
+                  className="second-pic-edit"
+                />
+              )}
+            </div>
             <input
               className="d-none"
               name="vehicle-photo"
               ref={hiddenFileInput1}
               type="file"
-              onChange={(value) => setMainPic(value.target.files[0])}
+              onChange={(value) => {
+                if (value.target.files[0]) {
+                  setMainPic(value.target.files[0]);
+                  setMainPicBackground(
+                    URL.createObjectURL(value.target.files[0])
+                  );
+                }
+              }}
             />
             <div className="add-alt-image-container d-flex justify-content-between">
               <div
@@ -88,32 +114,66 @@ function AddVehicle(props) {
                 style={{ cursor: "pointer" }}
                 className="add-alt-image1 d-flex align-items-center flex-column justify-content-center"
               >
-                <img alt="" src={cameraIcon} />
-                Click to add image
+                {!secondPicBackground ? (
+                  <>
+                    <img alt="" src={cameraIcon} />
+                    Click to add image
+                  </>
+                ) : (
+                  <img
+                    alt=""
+                    src={secondPicBackground}
+                    className="second-pic-edit"
+                  />
+                )}
               </div>
               <input
                 className="d-none"
                 ref={hiddenFileInput2}
                 type="file"
-                onChange={(value) => setSecondPic(value.target.files[0])}
+                onChange={(value) => {
+                  if (value.target.files[0]) {
+                    setSecondPic(value.target.files[0]);
+                    setSecondPicBackground(
+                      URL.createObjectURL(value.target.files[0])
+                    );
+                  }
+                }}
               />
               <div
                 onClick={thirdPicHandler}
                 style={{ cursor: "pointer" }}
                 className="d-flex flex-column justify-content-center add-alt-image2 text-center"
               >
-                <div>+</div>
-                Add more
+                {!thirdPicBackground ? (
+                  <>
+                    <div>+</div>
+                    Add more
+                  </>
+                ) : (
+                  <img
+                    alt=""
+                    src={thirdPicBackground}
+                    className="second-pic-edit"
+                  />
+                )}
               </div>
               <input
                 className="d-none"
                 ref={hiddenFileInput3}
                 type="file"
-                onChange={(value) => setThirdPic(value.target.files[0])}
+                onChange={(value) => {
+                  if (value.target.files[0]) {
+                    setThirdPic(value.target.files[0]);
+                    setThirdPicBackground(
+                      URL.createObjectURL(value.target.files[0])
+                    );
+                  }
+                }}
               />
             </div>
           </div>
-          <div className="d-flex flex-column add-vehicle-detail-container">
+          <div className="d-flex flex-column add-vehicle-detail-container justify-content-between pb-5 fs-4">
             <input
               type="text"
               name="vehicleName"
@@ -132,14 +192,16 @@ function AddVehicle(props) {
               placeholder="Description (max up to 150 words)"
               onChange={(value) => setVehicleDescription(value.target.value)}
             />
-            <p>Price:</p>
-            <input
-              className="vehiclePrice"
-              type="number"
-              name="vehiclePrice"
-              placeholder="Type the price"
-              onChange={(value) => setVehiclePrice(value.target.value)}
-            />
+            <div>
+              <p>Price:</p>
+              <input
+                className="vehiclePrice"
+                type="number"
+                name="vehiclePrice"
+                placeholder="Type the price"
+                onChange={(value) => setVehiclePrice(value.target.value)}
+              />
+            </div>
             <div className="vehicle-stock d-flex">
               <p>Stock:</p>
               <CounterButton
