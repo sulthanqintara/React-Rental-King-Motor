@@ -195,7 +195,7 @@ div.mail-dropdown > .dropdown-menu[data-bs-popper] {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url("/src/assets/img/hero-imagejfif.jfif");
+  background-image: url("/src/assets/img/hero-imagejfif.jpg");
 }
 .hero-container {
   color: white;
@@ -358,7 +358,7 @@ a.text-view {
   position: relative;
   width: 384px;
   height: 491px;
-  background-image: url("/src/assets/img/founder-circle.png");
+  background-image: url("/src/assets/img/founder-circle.jpg");
   border-radius: 14px;
   background-size: 195%;
   background-position: 40% 0%;
@@ -413,7 +413,7 @@ a.text-view {
 
 /******* ========== AUTH/LOGIN ========== *******/
 .login-background {
-  background-image: url(/src/assets/img/popular3.jfif);
+  background-image: url(/src/assets/img/popular3.jpg);
   background-size: 100%;
   background-position: 50% 75%;
   background-repeat: no-repeat;
@@ -528,7 +528,7 @@ button.chat-admin:hover {
 
 .forgot-password-background {
   height: 758px;
-  background-image: url(/src/assets/img/forgot-password.webp);
+  background-image: url(/src/assets/img/forgot-password.jpg);
   background-size: 100%;
   background-repeat: no-repeat;
   height: 758px;
