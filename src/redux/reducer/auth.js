@@ -1,4 +1,9 @@
-import { signedIn, signIn, signOut } from "../actionCreators/actionString";
+import {
+  signedIn,
+  signIn,
+  signOut,
+  uploadProfile,
+} from "../actionCreators/actionString";
 import { ActionType } from "redux-promise-middleware";
 
 const authInfoLocalStorage = JSON.parse(localStorage.getItem("userInfo"));
@@ -9,7 +14,7 @@ const defaultState = {
   isFulfilled: false,
   isRejected: false,
   isLogin: authInfoLocalStorage ? true : false,
-  error: {},
+  error: false,
 };
 
 const authReducer = (prevstate = defaultState, action) => {
@@ -21,6 +26,7 @@ const authReducer = (prevstate = defaultState, action) => {
         isPending: true,
         isFulfilled: false,
         isRejected: false,
+        error: false,
       };
     case signIn.concat("_", Rejected):
       return {
@@ -42,6 +48,7 @@ const authReducer = (prevstate = defaultState, action) => {
         isFulfilled: true,
         authInfo: action.payload.data.result.userInfo,
         isLogin: true,
+        error: false,
       };
     case signedIn:
       return {
@@ -72,6 +79,32 @@ const authReducer = (prevstate = defaultState, action) => {
         isFulfilled: true,
         authInfo: action.payload.data.result,
         isLogin: false,
+      };
+    case uploadProfile.concat("_", Pending):
+      return {
+        ...prevstate,
+        isPending: true,
+        isFulfilled: false,
+        isRejected: false,
+      };
+    case uploadProfile.concat("_", Rejected):
+      return {
+        ...prevstate,
+        isPending: false,
+        isRejected: true,
+        error: action.payload,
+      };
+    case uploadProfile.concat("_", Fulfilled):
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify(action.payload.data.result)
+      );
+      return {
+        ...prevstate,
+        isFulfilled: true,
+        isPending: false,
+        error: "",
+        authInfo: action.payload.data.result,
       };
     default:
       return prevstate;

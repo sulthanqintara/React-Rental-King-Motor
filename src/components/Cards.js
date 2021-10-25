@@ -5,7 +5,7 @@ function Card({ link, picture, title, subtitle }) {
     <Link
       to={link ? link : "#"}
       className={"card-image col-3 d-flex align-items-end"}
-      style={{ backgroundImage: `url(${picture})` }}
+      style={{ backgroundImage: `url(${picture})`, backgroundColor: "grey" }}
     >
       <div className="name-card-text">
         <div className="fw-bolder">{title}</div>

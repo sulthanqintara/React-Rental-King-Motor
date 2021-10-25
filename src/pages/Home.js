@@ -8,6 +8,7 @@ import Footer from "../components/Footer";
 import star from "../assets/img/icon/Vectorstar.png";
 import plusVector from "../assets/img/icon/vector-plus.png";
 import Card from "../components/Cards";
+import Loader from "react-loader-spinner";
 
 class Home extends Component {
   state = {
@@ -16,11 +17,12 @@ class Home extends Component {
     type: "",
   };
   componentDidMount() {
-    Axios.get("http://localhost:8000/vehicles", {
+    const url = process.env.REACT_APP_BASE_URL;
+    Axios.get(`${url}/vehicles`, {
       params: { order_by: "v.popular_stats", sort: "DESC", limit: "4" },
     })
       .then(({ data }) => {
-        this.setState({ popular: data.result });
+        this.setState({ popular: data.result.data });
       })
       .catch((err) => {
         console.log(err);
@@ -34,7 +36,8 @@ class Home extends Component {
   }
 
   render() {
-    const data = this.state.popular;
+    const data = this.state.popular || [];
+    const url = process.env.REACT_APP_BASE_URL;
     return (
       <div className="home-page">
         <Header />
@@ -120,13 +123,23 @@ class Home extends Component {
                 View all <span className="fw-bolder">&nbsp;&nbsp;&gt;</span>
               </Link>
             </div>
+            {!data[0] && (
+              <div className="loader">
+                <Loader
+                  type="TailSpin"
+                  color="#ffcd61"
+                  height={80}
+                  width={80}
+                />
+              </div>
+            )}
             <div className="row justify-content-around align-items-center mb-5">
-              {data.map((data) => {
+              {data?.map((data) => {
                 return (
                   <Card
                     key={data.id}
                     link={`/detail/${data.id}`}
-                    picture={data.picture.split(",")[0]}
+                    picture={url + data.picture.split(",")[0]}
                     title={data.model}
                     subtitle={data.location}
                   />

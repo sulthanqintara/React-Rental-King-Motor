@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getVehicle } from "../utils/https/Vehicles";
 import arrow from "../assets/img/icon/arrow-left.png";
 import { withRouter } from "react-router";
+import Loader from "react-loader-spinner";
 
 function HistoryComponent({
   id,
@@ -17,10 +18,11 @@ function HistoryComponent({
   authLevel,
   history,
 }) {
+  const url = process.env.REACT_APP_BASE_URL;
   const [image, setImage] = useState("");
   useEffect(() => {
     getVehicle({ id: vehicleId }).then((data) => {
-      setImage(data.data.result[0].picture);
+      setImage(data.data.result.data[0].picture);
     });
   }, []);
 
@@ -80,10 +82,13 @@ function HistoryComponent({
           id={"history" + id}
         >
           <div className="d-flex flex-grow-7 history-item-row ">
+            {!image.split(",")[0] && (
+              <Loader type="TailSpin" color="#ffcd61" height={80} width={80} />
+            )}
             <div
               className="history-test"
               style={{
-                backgroundImage: `url(${image.split(",")[0]})`,
+                backgroundImage: `url(${url}${image.split(",")[0]})`,
                 backgroundPosition: "center",
               }}
             />

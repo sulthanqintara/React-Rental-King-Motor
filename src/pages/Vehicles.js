@@ -5,6 +5,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Card from "../components/Cards";
 import Axios from "axios";
+import Loader from "react-loader-spinner";
+const url = process.env.REACT_APP_BASE_URL;
 
 class Vehicles extends Component {
   constructor(props) {
@@ -19,46 +21,42 @@ class Vehicles extends Component {
     };
   }
   axiosGet = (query) => {
-    Axios.get(`http://localhost:8000/vehicles${query}`)
+    Axios.get(`${url}/vehicles${query}`)
       .then(({ data }) => {
+        console.log(data);
         this.setState({
-          search: data.result,
+          search: data.result.data,
         });
       })
       .catch((err) => {
-        this.setState({
-          searchError: err.response.status,
-          search: [],
-        });
+        console.log(err);
       });
   };
   searchVehicleHandler = (e) => {
     e.preventDefault();
-    console.log();
     const query = `?keyword=${this.state.vehicleSearch}`;
     this.props.history.push("/vehicles?keyword=" + this.state.vehicleSearch);
     this.axiosGet(query);
   };
   componentDidMount() {
-    const url = "http://localhost:8000/vehicles";
     const getPerType = (filter) => {
-      Axios.get(url, {
-        params: { filter_by_type: filter, limit: "4" },
+      Axios.get(`${url}/vehicles`, {
+        params: { filter_by_type: filter, limit: 4 },
       })
         .then(({ data }) => {
           if (filter === 1) {
             this.setState({
-              cars: data.result,
+              cars: data.result.data,
             });
           }
           if (filter === 2) {
             this.setState({
-              motorcycle: data.result,
+              motorcycle: data.result.data,
             });
           }
           if (filter === 3) {
             this.setState({
-              bike: data.result,
+              bike: data.result.data,
             });
           }
         })
@@ -66,11 +64,11 @@ class Vehicles extends Component {
           console.log(err);
         });
     };
-    Axios.get(url, {
+    Axios.get(`${url}/vehicles`, {
       params: { order_by: "v.popular_stats", sort: "DESC", limit: "4" },
     })
       .then(({ data }) => {
-        this.setState({ popular: data.result });
+        this.setState({ popular: data.result.data });
       })
       .catch((err) => {
         console.log(err);
@@ -101,12 +99,12 @@ class Vehicles extends Component {
               <>
                 <h2 className="mt-5">Search Result:</h2>
                 <div className="row justify-content-around align-items-center mb-5">
-                  {this.state.search.map((data) => {
+                  {this.state.search?.map((data) => {
                     return (
                       <Card
                         key={data.id}
                         link={`/detail/${data.id}`}
-                        picture={data.picture.split(",")[0]}
+                        picture={url + data.picture.split(",")[0]}
                         title={data.model}
                         subtitle={data.location}
                       />
@@ -127,13 +125,23 @@ class Vehicles extends Component {
                 View all <span className="fw-bolder">&nbsp;&nbsp;&gt;</span>
               </Link>
             </div>
+            {!this.state.popular[0] && (
+              <div className="loader">
+                <Loader
+                  type="TailSpin"
+                  color="#ffcd61"
+                  height={80}
+                  width={80}
+                />
+              </div>
+            )}
             <div className="row justify-content-around align-items-center mb-5">
-              {this.state.popular.map((data) => {
+              {this.state.popular?.map((data) => {
                 return (
                   <Card
                     key={data.id}
                     link={`/detail/${data.id}`}
-                    picture={data.picture.split(",")[0]}
+                    picture={url + data.picture.split(",")[0]}
                     title={data.model}
                     subtitle={data.location}
                   />
@@ -146,14 +154,24 @@ class Vehicles extends Component {
                 View all <span className="fw-bolder">&nbsp;&nbsp;&gt;</span>
               </Link>
             </div>
+            {!this.state.cars[0] && (
+              <div className="loader">
+                <Loader
+                  type="TailSpin"
+                  color="#ffcd61"
+                  height={80}
+                  width={80}
+                />
+              </div>
+            )}
             <div className="row justify-content-around align-items-center mb-5">
               {this.getVehicleHandler}
-              {this.state.cars.map((data) => {
+              {this.state.cars?.map((data) => {
                 return (
                   <Card
                     key={data.id}
                     link={`/detail/${data.id}`}
-                    picture={data.picture.split(",")[0]}
+                    picture={url + data.picture.split(",")[0]}
                     title={data.model}
                     subtitle={data.location}
                   />
@@ -166,13 +184,23 @@ class Vehicles extends Component {
                 View all <span className="fw-bolder">&nbsp;&nbsp;&gt;</span>
               </Link>
             </div>
+            {!this.state.motorcycle[0] && (
+              <div className="loader">
+                <Loader
+                  type="TailSpin"
+                  color="#ffcd61"
+                  height={80}
+                  width={80}
+                />
+              </div>
+            )}
             <div className="row justify-content-around align-items-center mb-5">
-              {this.state.motorcycle.map((data) => {
+              {this.state.motorcycle?.map((data) => {
                 return (
                   <Card
                     key={data.id}
                     link={`/detail/${data.id}`}
-                    picture={data.picture.split(",")[0]}
+                    picture={url + data.picture.split(",")[0]}
                     title={data.model}
                     subtitle={data.location}
                   />
@@ -185,13 +213,23 @@ class Vehicles extends Component {
                 View all <span className="fw-bolder">&nbsp;&nbsp;&gt;</span>
               </Link>
             </div>
+            {!this.state.bike[0] && (
+              <div className="loader">
+                <Loader
+                  type="TailSpin"
+                  color="#ffcd61"
+                  height={80}
+                  width={80}
+                />
+              </div>
+            )}
             <div className="row justify-content-around align-items-center mb-5">
               {this.state.bike.map((data) => {
                 return (
                   <Card
                     key={data.id}
                     link={`/detail/${data.id}`}
-                    picture={data.picture.split(",")[0]}
+                    picture={url + data.picture.split(",")[0]}
                     title={data.model}
                     subtitle={data.location}
                   />

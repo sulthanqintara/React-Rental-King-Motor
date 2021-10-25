@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { profileAction } from "../redux/actionCreators/profile";
+import { profileAction } from "../redux/actionCreators/auth";
 import Swal from "sweetalert2";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-// import { patchProfile } from "../utils/https/Profile";
+const url = process.env.REACT_APP_BASE_URL;
 
 class Profile extends React.Component {
   state = {
@@ -18,6 +18,9 @@ class Profile extends React.Component {
     userName: "",
     dob: new Date(this.props.auth.authInfo?.dob).toLocaleDateString("en-CA"),
     files: "",
+    profilePic: this.props.auth.authInfo.profilePic
+      ? url + this.props.auth.authInfo.profilePic
+      : url + "/img/profile-icon-png-898.png",
   };
   constructor(props) {
     super(props);
@@ -45,8 +48,7 @@ class Profile extends React.Component {
     );
     form.append(
       "DOB",
-      this.state.dob.toLocaleDateString("en-CA") ||
-        this.props.auth.authInfo.dob.toLocaleDateString("en-CA")
+      this.state.dob || this.props.auth.authInfo.dob.toLocaleDateString("en-CA")
     );
     Swal.fire({
       title: "Do you want to save the changes?",
@@ -58,8 +60,8 @@ class Profile extends React.Component {
       icon: "question",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Saved!", "", "success");
         this.props.updateProfile(form, this.props.auth.authInfo.user_id);
+        Swal.fire("Saved!", "", "success");
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
       }
@@ -74,15 +76,16 @@ class Profile extends React.Component {
           <p className="profile-title">Profile</p>
           <section className="text-center top-profile">
             <div
-              className="profile-photo profile-display"
+              className="profile-photo profile-display-container"
               style={{
-                backgroundImage: `url(${
-                  this.props.auth.authInfo.profilePic
-                    ? this.props.auth.authInfo.profilePic
-                    : "http://localhost:8000/img/profile-icon-png-898.png"
-                })`,
+                backgroundImage: this.state.profilePic,
               }}
             >
+              <img
+                src={this.state.profilePic}
+                alt="profile"
+                className="profile-photo profile-display"
+              />
               <button className="edit-profile" onClick={this.handleClick}>
                 <label className="edit-icon" />
               </button>
@@ -91,7 +94,10 @@ class Profile extends React.Component {
                 ref={this.myRef}
                 type="file"
                 onChange={(value) =>
-                  this.setState({ files: value.target.files[0] })
+                  this.setState({
+                    files: value.target.files[0],
+                    profilePic: URL.createObjectURL(value.target.files[0]),
+                  })
                 }
               />
             </div>

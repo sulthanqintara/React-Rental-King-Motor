@@ -4,16 +4,22 @@ import { connect } from "react-redux";
 import { loggedInAction, logoutAction } from "../redux/actionCreators/auth";
 import Swal from "sweetalert2";
 
+import Loader from "react-loader-spinner";
 import { Component } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 
 class Header extends Component {
+  state = { loadingState: false };
   signOutHandler = () => {
+    this.setState({ loadingState: true });
     this.props.signOut();
-    this.props.history.push("/auth");
   };
+  componentDidUpdate() {
+    !this.props.auth.isLogin && this.props.history.push("/auth");
+  }
   render() {
+    const url = process.env.REACT_APP_BASE_URL;
     const path = this.props.location.pathname;
     return (
       <>
@@ -141,8 +147,8 @@ class Header extends Component {
                     style={{
                       backgroundImage: `url(${
                         this.props.auth.authInfo.profilePic
-                          ? this.props.auth.authInfo.profilePic
-                          : "http://localhost:8000/img/profile-icon-png-898.png"
+                          ? url + this.props.auth.authInfo.profilePic
+                          : `${url}/img/profile-icon-png-898.png`
                       })`,
                     }}
                     title=""
@@ -201,6 +207,11 @@ class Header extends Component {
               </Nav>
             </Navbar.Collapse>
           </Navbar>
+          {this.state.loadingState && (
+            <div className="loader loader-modal">
+              <Loader type="TailSpin" color="#ffcd61" height={80} width={80} />
+            </div>
+          )}
         </header>
       </>
     );

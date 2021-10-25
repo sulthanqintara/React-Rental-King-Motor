@@ -16,6 +16,10 @@ a:active {
   background-color: transparent;
   text-decoration: none;
 }
+html {
+  min-height: 100%; /* make sure it is at least as tall as the viewport */
+  position: relative;
+}
 
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;700;900&display=swap");
@@ -41,6 +45,25 @@ code {
   padding: 6px 36px;
   border-radius: 8px;
   transition: 0.3s;
+}
+.loader-modal {
+  display: flex;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+  /* align-items: center; */
+  top: 0;
+  padding-top: 50vh;
+  z-index: 9999;
+}
+.loader {
+  display: flex;
+  justify-content: center;
+}
+.view-detail-loader {
+  margin-top: 25%;
+  margin-bottom: 25%;
 }
 /******* ========== NAVBAR ========== *******/
 nav {
@@ -249,6 +272,7 @@ a.text-view {
 .text-view:hover {
   color: #ffcd61 !important;
 }
+
 .card-image > image {
   width: 100%;
 }
@@ -558,20 +582,27 @@ a:active.resend-link-url {
 .profile-display {
   height: 218px;
   border-radius: 50%;
-  margin: auto;
   width: 218px;
+  object-fit: cover;
+}
+.profile-display-container {
+  width: 278px;
+  height: 218px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
 }
 .edit-profile {
-  margin-top: 75%;
-  float: right;
   background: #ffcd61;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  display: flex;
   justify-content: center;
   align-items: center;
   transition: 0.2s;
+  position: absolute;
+  top: 160px;
+  right: 25px;
 }
 .edit-icon {
   background-image: url(/src/assets/img/icon/pen.png);
@@ -582,6 +613,7 @@ a:active.resend-link-url {
   background-repeat: no-repeat;
   cursor: pointer;
   border: none;
+  margin: auto;
 }
 .profile-name {
   font-size: 48px;

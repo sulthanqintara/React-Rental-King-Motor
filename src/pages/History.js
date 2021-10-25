@@ -9,6 +9,7 @@ import Card from "../components/Cards";
 import HistoryComponent from "../components/HistoryComponent";
 import { connect } from "react-redux";
 import Swal from "sweetalert2";
+import Loader from "react-loader-spinner";
 
 class History extends Component {
   state = {
@@ -32,6 +33,7 @@ class History extends Component {
     search: "",
     dateFilter: "",
     selectedHistory: "",
+    loading: true,
   };
   authInfo = this.props.auth.authInfo;
   authLevel = Number(this.authInfo.authLevel);
@@ -71,9 +73,15 @@ class History extends Component {
             filter_date: dateParams,
             sort: "DESC",
           };
-    getTransaction(params).then((data) => {
-      this.setState({ history: data.data.result.data });
-    });
+    getTransaction(params)
+      .then((data) => {
+        this.setState({ history: data.data.result.data });
+      })
+      .catch((err) => {
+        if (String(err).includes("404")) {
+          this.setState({ history: [] });
+        }
+      });
   };
 
   deleteHandler = (e) => {
@@ -106,7 +114,7 @@ class History extends Component {
         ? { user_id: this.authInfo.user_id }
         : { owner_id: this.authInfo.user_id };
     getTransaction(params).then((data) => {
-      return this.setState({ history: data.data.result.data });
+      return this.setState({ history: data.data.result.data, loading: false });
     });
   }
 
@@ -156,6 +164,15 @@ class History extends Component {
               }}
             >
               <div className="time-stamp">Today</div>
+              <div className="loader">
+                <Loader
+                  type="TailSpin"
+                  color="#ffcd61"
+                  height={80}
+                  width={80}
+                  visible={this.state.loading}
+                />
+              </div>
               {this.state.history.map((data) => {
                 const currentDate = new Date();
                 if (
@@ -184,6 +201,15 @@ class History extends Component {
                 return "";
               })}
               <div className="time-stamp">A week ago</div>
+              <div className="loader">
+                <Loader
+                  type="TailSpin"
+                  color="#ffcd61"
+                  height={80}
+                  width={80}
+                  visible={this.state.loading}
+                />
+              </div>
               {this.state.history.map((data) => {
                 const currentDate = new Date();
                 if (
@@ -214,6 +240,15 @@ class History extends Component {
                 return "";
               })}
               <div className="time-stamp">More than a week ago</div>
+              <div className="loader">
+                <Loader
+                  type="TailSpin"
+                  color="#ffcd61"
+                  height={80}
+                  width={80}
+                  visible={this.state.loading}
+                />
+              </div>
               {this.state.history.map((data) => {
                 const currentDate = new Date();
                 if (

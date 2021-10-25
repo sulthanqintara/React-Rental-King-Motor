@@ -30,8 +30,9 @@ const profileReducer = (prevstate = defaultState, action) => {
     case uploadProfile.concat("_", Fulfilled):
       return {
         ...prevstate,
+        isFulfilled: true,
         isPending: false,
-        isRejected: true,
+        isRejected: false,
         error: "",
         message: action.payload,
       };

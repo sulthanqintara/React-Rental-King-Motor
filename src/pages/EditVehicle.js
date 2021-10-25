@@ -13,7 +13,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 function EditVehicle(props) {
-  const url = `${process.env.REACT_APP_BASE_URL}/vehicles`;
+  const url = process.env.REACT_APP_BASE_URL;
   const { id } = props.match.params;
 
   const counter = useSelector((reduxState) => reduxState.count);
@@ -37,17 +37,17 @@ function EditVehicle(props) {
 
   useEffect(() => {
     axios
-      .get(url, {
+      .get(`${url}/vehicles`, {
         params: { id: String(id) },
       })
       .then(({ data }) => {
-        const arrayResult = data.result[0];
+        const arrayResult = data.result.data[0];
         arrayResult.picture &&
-          setMainPicBackground(arrayResult.picture.split(",")[0]);
+          setMainPicBackground(url + arrayResult.picture.split(",")[0]);
         arrayResult.picture &&
-          setSecondPicBackground(arrayResult.picture.split(",")[1]);
+          setSecondPicBackground(url + arrayResult.picture.split(",")[1]);
         arrayResult.picture &&
-          setThirdPicBackground(arrayResult.picture.split(",")[2]);
+          setThirdPicBackground(url + arrayResult.picture.split(",")[2]);
         arrayResult.model && setVehicleName(arrayResult.model);
         arrayResult.location && setvehicleLocation(arrayResult.location);
         arrayResult.description &&

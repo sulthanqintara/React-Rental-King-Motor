@@ -53,13 +53,17 @@ class Reservation extends Component {
     const finishedDate = new Date(
       pickedDate.setDate(pickedDate.getDate() + Number(this.state.duration))
     ).toLocaleDateString("en-CA");
-    const payment_code = String(
+    const booking_code = String(
       `#${id}${reduxState.auth.authInfo.user_id}${
         this.state.location.split("")[0]
       }${new Date().getMilliseconds()}${
         this.state.model.split("")[0]
       }${this.state.category.split("", [0])}`
     );
+    const min = Math.ceil(11111111);
+    const max = Math.floor(99999999);
+    const payment_code = Math.floor(Math.random() * (max - min) + min);
+
     const body = {
       user_id: reduxState.auth.authInfo.user_id,
       model_id: id,
@@ -68,7 +72,8 @@ class Reservation extends Component {
       rent_start_date: String(this.state.reserveStartDate),
       rent_finish_date: String(finishedDate),
       payment_method: 1,
-      payment_code,
+      booking_code,
+      payment_code: payment_code,
     };
 
     postTransactions(body)
@@ -82,19 +87,19 @@ class Reservation extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    const url = "http://localhost:8000/vehicles";
-    Axios.get(url, {
+    const url = process.env.REACT_APP_BASE_URL;
+    Axios.get(`${url}/vehicles`, {
       params: { id: String(id) },
     })
       .then(({ data }) => {
-        const arrayResult = data.result[0];
+        const arrayResult = data.result.data[0];
         this.setState({
           amount_available: arrayResult.amount_available,
           category: arrayResult.category,
           id: arrayResult.id,
           location: arrayResult.location,
           model: arrayResult.model,
-          picture: arrayResult.picture,
+          picture: url + arrayResult.picture.split(",")[0],
           price: arrayResult.price,
         });
         localStorage.setItem("vehicleData", JSON.stringify(arrayResult));
