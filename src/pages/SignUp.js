@@ -37,7 +37,7 @@ function Register() {
       form.append("email", email);
       form.append("password", password);
       postRegister(form)
-        .then((res) => history.push({ pathname: "/", status: true }))
+        .then((res) => history.push({ pathname: "/auth", status: true }))
         .catch((error) => {
           if (error.response) {
             console.log(error.response.data);
