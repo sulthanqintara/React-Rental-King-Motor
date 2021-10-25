@@ -36,6 +36,7 @@ function Register() {
       form.append("name", userName);
       form.append("email", email);
       form.append("password", password);
+      form.append("auth_level", 3);
       postRegister(form)
         .then((res) => history.push({ pathname: "/auth", status: true }))
         .catch((error) => {
