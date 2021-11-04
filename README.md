@@ -11,7 +11,7 @@ This is source code for Rental King Motor website made using ReactJS. A vehicle 
 
 - [Node](https://nodejs.org/en/)
 - [Yarn](https://yarnpkg.com/)
-- 
+
 ## Deployed Website
 ---
 You can visit the website directly [here](https://rental-king-motor.vercel.app/)
