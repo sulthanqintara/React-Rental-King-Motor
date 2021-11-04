@@ -43,10 +43,10 @@ yarn start
 
 ---
 
-<img src="./src/assets/img/readme/home.png" alt="home" width="500"/>
-<img src="./src/assets/img/readme/home.png" alt="home" width="500"/>
-<img src="./src/assets/img/readme/home.png" alt="home" width="500"/>
-<img src="./src/assets/img/readme/home.png" alt="home" width="500"/>
+<img src="./src/assets/img/readme/home.png" alt="home" width="800"/>
+<img src="./src/assets/img/readme/home.png" alt="home" width="800"/>
+<img src="./src/assets/img/readme/home.png" alt="home" width="800"/>
+<img src="./src/assets/img/readme/home.png" alt="home" width="800"/>
 
 ## Available Scripts
 
