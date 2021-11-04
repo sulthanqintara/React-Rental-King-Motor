@@ -44,9 +44,9 @@ yarn start
 ---
 
 <img src="./src/assets/img/readme/home.png" alt="home" width="500"/>
-<img src="./src/assets/img/readme/home.png" alt="home" width="500"/>
-<img src="./src/assets/img/readme/home.png" alt="home" width="500"/>
-<img src="./src/assets/img/readme/home.png" alt="home" width="500"/>
+<img src="./src/assets/img/readme/search.png" alt="search" width="500"/>
+<img src="./src/assets/img/readme/vehicle.png" alt="vehicle" width="500"/>
+<img src="./src/assets/img/readme/profile.png" alt="profile" width="500"/>
 
 ## Available Scripts
 
